@@ -14,13 +14,13 @@ public class Ayudas
 	 * @param myRobotAPI
 	 * @return el angulo a poner.Si estamos en el sitio pone la vel a 0
 	 */
-	public double irAPosicion(Vec2 destino,RobotAPI myRobotAPI,double parada)
+public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 	{
 		
 		Vec2 myPos=myRobotAPI.getPosition();
 		Vec2 resta=(Vec2) destino.clone();
 		resta.sub(myPos);	
-		System.err.println(resta.t);
+		
 		if(cercano(myPos,destino,myRobotAPI,parada))
 		{
 			myRobotAPI.setSpeed(0);
@@ -34,6 +34,18 @@ public class Ayudas
 			}
 		}
 		
+		
+		return resta.t;
+		
+	}
+	
+	public double irAPosicionNoParando(Vec2 destino,RobotAPI myRobotAPI)
+	{
+		
+		Vec2 myPos=myRobotAPI.getPosition();
+		Vec2 resta=(Vec2) destino.clone();
+		resta.sub(myPos);	
+
 		
 		return resta.t;
 		
