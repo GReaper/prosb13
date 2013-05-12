@@ -20,7 +20,7 @@ public class Entrenador extends TeamManager
 	{
 		_players[0].setBehaviour(_behaviours[2]);
 		//_players[1].setBehaviour(_behaviours[0]);
-		//_players[2].setBehaviour(_behaviours[2]);
+		_players[2].setBehaviour(_behaviours[5]);
 		_players[3].setBehaviour(_behaviours[4]);
 		_players[4].setBehaviour(_behaviours[3]);
 		
@@ -37,6 +37,7 @@ public class Entrenador extends TeamManager
 								new QuietoParao(),
 								new LocoBola(),
 								new Rebote(),
-								new Desmarcador()};
+								new Desmarcador(),
+								new MedioCentroDefensivo()};
 	}
 }

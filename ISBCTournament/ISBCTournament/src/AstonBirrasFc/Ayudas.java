@@ -149,5 +149,33 @@ public class Ayudas
 		}
 		return false;
 	}
+	
+	/**
+	 * Devuelve el angulo que hay que poner para llegar a un sitio
+	 * 
+	 * @param destino en coordenadas globales
+	 * @param myRobotAPI
+	 * @return el ángulo necesario
+	 */
+	public double anguloNecesario(Vec2 destino,RobotAPI myRobotAPI,double parada)
+	{		
+		Vec2 myPos=myRobotAPI.getPosition();
+		Vec2 resta=(Vec2) destino.clone();
+		resta.sub(myPos);	
+		if(cercano(myPos,destino,myRobotAPI,parada))
+		{
+			myRobotAPI.setSpeed(0);
+			if(myRobotAPI.getFieldSide()==RobotAPI.WEST_FIELD)
+			{
+				return 0;
+			}
+			else
+			{
+				return degToRad(180);
+			}
+		}	
+		
+		return resta.t;		
+	}
 
 }

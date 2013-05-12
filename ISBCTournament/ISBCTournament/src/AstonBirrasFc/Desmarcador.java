@@ -25,7 +25,7 @@ public class Desmarcador extends Behaviour
 		{
 			// 1.- Set steering
 			Vec2 dest = myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestMate());
-			double angleAux = helper.irAPosicion(dest, myRobotAPI, 0.01);
+			double angleAux = helper.anguloNecesario(dest, myRobotAPI, 0.01);
 			double angle = helper.degToRad(helper.radToDeg(angleAux) + 180);
 			myRobotAPI.setSteerHeading(angle);	
 
@@ -49,7 +49,7 @@ public class Desmarcador extends Behaviour
 			{
 				// 1.- Set steering
 				Vec2 dest = myRobotAPI.toFieldCoordinates(closestOp);
-				double angleAux = helper.irAPosicion(dest, myRobotAPI, 0.01);
+				double angleAux = helper.anguloNecesario(dest, myRobotAPI, 0.01);
 				double angle = helper.degToRad(helper.radToDeg(angleAux) + 180);
 				myRobotAPI.setSteerHeading(angle);	
 
@@ -79,7 +79,7 @@ public class Desmarcador extends Behaviour
 				// Go to right corner
 				dest = new Vec2(myRobotAPI.getOpponentsGoal().x, myRobotAPI.getUpperFieldBound());				
 			}
-			double angle = helper.irAPosicion(dest, myRobotAPI, 0.01);
+			double angle = helper.anguloNecesario(dest, myRobotAPI, 0.01);
 			
 			myRobotAPI.setSteerHeading(angle);	
 			
@@ -100,7 +100,7 @@ public class Desmarcador extends Behaviour
 			
 			// 1.- Set steering
 			Vec2 dest = myRobotAPI.toFieldCoordinates(closestOp);
-			double angleAux = helper.irAPosicion(dest, myRobotAPI, 0.01);
+			double angleAux = helper.anguloNecesario(dest, myRobotAPI, 0.01);
 			double angle = helper.degToRad(helper.radToDeg(angleAux) + 180);
 			myRobotAPI.setSteerHeading(angle);	
 
