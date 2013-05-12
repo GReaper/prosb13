@@ -43,7 +43,7 @@ public class LocoBola extends Behaviour
 		if(ayuda.pelotaEnMiCampo(myRobotAPI))
 		{	
 			
-			if(ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI, 0.15))
+			if(ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI, 0.15) || myRobotAPI.closestToBall())
 			{
 				myRobotAPI.setSpeed(0.4);
 				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
@@ -56,7 +56,7 @@ public class LocoBola extends Behaviour
 			{
 			
 				myRobotAPI.setSpeed(1000);
-				double angulo=ayuda.irAPosicion(myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI,0.05);
+				double angulo=ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI,0.05);
 				
 					
 				myRobotAPI.setSteerHeading(angulo);	
@@ -75,7 +75,7 @@ public class LocoBola extends Behaviour
 			Vec2 destino=ayuda.getMiCentro(myRobotAPI);// new Vec2(micuarto, myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()).y);
 			//destino=myRobotAPI.toEgocentricalCoordinates(destino);
 			myRobotAPI.setSpeed(1000);
-			double angulo=ayuda.irAPosicion(destino, myRobotAPI,0.01);
+			double angulo=ayuda.irAPosicionParando(destino, myRobotAPI,0.01);
 			
 			myRobotAPI.setSteerHeading(angulo);	
 			

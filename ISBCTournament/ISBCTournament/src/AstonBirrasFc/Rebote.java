@@ -53,14 +53,15 @@ public class Rebote extends Behaviour
 		{
 			case SIN_BOLA:
 				myRobotAPI.setSpeed(1000);
-				angulo=ayuda.irAPosicion(myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI,0.05);					
+				angulo=ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI,0.05);					
 				myRobotAPI.setSteerHeading(angulo);	
 		
 				estado=Estados.IR_POR_BOLA;
 				break;
 				
 			case IR_POR_BOLA:
-				if(ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI, 0.1))
+				if(ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI, 0.1)
+						||myRobotAPI.closestToBall() )
 				{
 					myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 					if(myRobotAPI.getPosition().x>=0)
@@ -70,14 +71,15 @@ public class Rebote extends Behaviour
 				}
 				else
 				{
-					if(ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI, 0.1))
+					if(ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI, 0.1)
+							|| myRobotAPI.closestToBall())
 					{
 						myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 					}
 					else
 					{
 						myRobotAPI.setSpeed(1000);
-						angulo=ayuda.irAPosicion(myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI,0.05);					
+						angulo=ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI,0.05);					
 						myRobotAPI.setSteerHeading(angulo);	
 					}
 					
@@ -121,7 +123,7 @@ public class Rebote extends Behaviour
 				}
 				else
 				{
-					angulo=ayuda.irAPosicion(myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI,0.05);
+					angulo=ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI,0.05);
 					myRobotAPI.setSteerHeading(angulo);	
 				}
 				
@@ -139,7 +141,7 @@ public class Rebote extends Behaviour
 				}
 				else
 				{
-					angulo=ayuda.irAPosicion(myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI,0.05);
+					angulo=ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI,0.05);
 					myRobotAPI.setSteerHeading(angulo);	
 				}
 				
