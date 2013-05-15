@@ -28,7 +28,7 @@ public class Regateador extends Behaviour
 		{
 			myRobotAPI.setSpeed(1000);
 			myRobotAPI.avoidCollisions();
-			myRobotAPI.
+			//myRobotAPI.
 		}
 		
 		// Check whether that opponent is too close or if the player is blocked
