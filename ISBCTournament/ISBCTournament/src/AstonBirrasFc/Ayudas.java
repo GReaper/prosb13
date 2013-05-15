@@ -190,4 +190,22 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 		return resta.t;		
 	}
 
+	public boolean estaDelante(RobotAPI myRobotAPI, Vec2 rival) 
+	{
+		
+		Vec2 yo= myRobotAPI.getPosition();
+		
+		if(myRobotAPI.getFieldSide()==RobotAPI.WEST_FIELD)
+		{
+			return yo.x<rival.x;
+			
+		}
+		else
+		{
+			return yo.x>rival.x;
+		}
+		
+
+	}
+
 }
