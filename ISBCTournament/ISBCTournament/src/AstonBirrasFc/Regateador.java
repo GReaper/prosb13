@@ -17,10 +17,66 @@ public class Regateador extends Behaviour
 
 	public int takeStep() 
 	{	
+		// Get height size
+		double hg = myRobotAPI.getUpperFieldBound() - myRobotAPI.getLowerFieldBound();
+		
+		// Take closest opponent
+		Vec2 closestOp = myRobotAPI.getClosestOpponent();
+		
+		// Check if the ball is not close enough
+		if (!helper.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI, myRobotAPI.getPlayerRadius()*1.5))
+		{
+			myRobotAPI.setSpeed(1000);
+			myRobotAPI.avoidCollisions();
+			myRobotAPI.
+		}
+		
+		// Check whether that opponent is too close or if the player is blocked
+		if (helper.cercano(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(closestOp), myRobotAPI, myRobotAPI.getPlayerRadius()*2)
+				|| myRobotAPI.isBlocking(closestOp))
+		{
+			Vec2 heading = myRobotAPI.getOpponentsGoal();
+			// 1.- Set heading	
+			if (myRobotAPI.getPosition().y >= 0)
+			{
+				// Go to the lower side
+				if (closestOp.y >= myRobotAPI.getPosition().y)
+				{
+					heading = new Vec2(heading.x, myRobotAPI.getPosition().y-(hg*0.1));
+				}
+				else
+				{
+					heading = new Vec2(heading.x, myRobotAPI.getPosition().y+(hg*0.1));
+				}
+			}
+			else
+			{
+				// Go to the upper side
+				if (closestOp.y <= myRobotAPI.getPosition().y)
+				{
+					heading = new Vec2(heading.x, myRobotAPI.getPosition().y+(hg*0.1));
+				}
+				else
+				{
+					heading = new Vec2(heading.x, myRobotAPI.getPosition().y-(hg*0.1));
+				}
+			}
+			myRobotAPI.setBehindBall(myRobotAPI.toEgocentricalCoordinates(heading));
+			
+			// 2.- Increase speed
+			myRobotAPI.setSpeed(0.3);
+			
+			// Set displayed text
+			myRobotAPI.setDisplayString("Reg. (AO)");
+			
+			// Return
+			return myRobotAPI.ROBOT_OK;
+		}
+		
 		// Push the ball towards the opponent's goal
-		myRobotAPI.setSpeed(0.5);
+		myRobotAPI.setSpeed(0.3);
 		myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
-		myRobotAPI.setDisplayString("Reg. (ToBall)");
+		myRobotAPI.setDisplayString("Reg. (ToGoal)");
 		
 		// Check whether the player is blocked by the closest teammate
 		/*if (myRobotAPI.isBlocking(myRobotAPI.getClosestMate()))
