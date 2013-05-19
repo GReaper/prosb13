@@ -233,10 +233,42 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 	 */
 	public double anguloDestino(Vec2 destino,RobotAPI myRobotAPI)
 	{		
-		Vec2 myPos = myRobotAPI.getPosition();
-		Vec2 resta=(Vec2) destino.clone();
+		//Vec2 myPos = myRobotAPI.getPosition();
+		/*Vec2 resta=(Vec2) destino.clone();
 		resta.sub(myPos);			
-		return resta.t;		
+		return resta.t;	*/
+		//double angle = /*(Math.toRadians(360) - myPos.t) +*/ Math.atan2(destino.y - myPos.y, destino.x - myPos.x);
+		//angle += Math.PI/2.0;
+		/*if(angle < 0)
+	    {
+	        angle += 360;
+	    }*/
+
+	    return myRobotAPI.normalizeZero(myRobotAPI.toEgocentricalCoordinates(destino).t);//angle;
+	}
+
+	/**
+	 * Coloca el ángulo del jugador para evitar colisión con el jugador dado
+	 * 
+	 * @param jugador a evitar (coordenadas egocentricas)
+	 * @return 
+	 */
+	public void evitaColision(Vec2 jugador, RobotAPI myRobotAPI)
+	{
+		double angle = myRobotAPI.normalizeZero(jugador.t + Math.PI);
+		myRobotAPI.setSteerHeading(angle);
+	}
+
+	/**
+	 * Coloca el ángulo del jugador para salir del bloqueo con el jugador dado
+	 * 
+	 * @param jugador a evitar (coordenadas egocentricas)
+	 * @return 
+	 */
+	public void evitarBloqueo(Vec2 jugador, RobotAPI myRobotAPI)
+	{
+		double angle = myRobotAPI.normalizeZero(jugador.t + 2*Math.PI);
+		myRobotAPI.setSteerHeading(angle);
 	}
 	
 	/**

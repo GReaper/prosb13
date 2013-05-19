@@ -19,10 +19,11 @@ public class MedioCentroDefensivo extends Behaviour
 		if (myRobotAPI.isBlocking(myRobotAPI.getClosestMate()))
 		{
 			// 1.- Set steering
-			Vec2 dest = myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestMate());
+			/*Vec2 dest = myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestMate());
 			double angleAux = helper.anguloDestino(dest, myRobotAPI);
 			double angle = helper.degToRad(helper.radToDeg(angleAux) + 180);
-			myRobotAPI.setSteerHeading(angle);	
+			myRobotAPI.setSteerHeading(angle);	*/
+			helper.evitarBloqueo(myRobotAPI.getClosestMate(), myRobotAPI);
 
 			// 2.- Increase speed
 			myRobotAPI.setSpeed(1000);

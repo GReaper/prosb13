@@ -24,10 +24,11 @@ public class Desmarcador extends Behaviour
 		if (myRobotAPI.isBlocking(myRobotAPI.getClosestMate()))
 		{
 			// 1.- Set steering
-			Vec2 dest = myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestMate());
+			/*Vec2 dest = myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestMate());
 			double angleAux = helper.anguloDestino(dest, myRobotAPI);
 			double angle = helper.degToRad(helper.radToDeg(angleAux) + 160);
-			myRobotAPI.setSteerHeading(angle);	
+			myRobotAPI.setSteerHeading(angle);	*/
+			helper.evitaColision(myRobotAPI.getClosestMate(), myRobotAPI);
 
 			// 2.- Increase speed
 			myRobotAPI.setSpeed(1000);
@@ -48,10 +49,11 @@ public class Desmarcador extends Behaviour
 					|| myRobotAPI.isBlocking(closestOp))
 			{
 				// 1.- Set steering
-				Vec2 dest = myRobotAPI.toFieldCoordinates(closestOp);
+				/*Vec2 dest = myRobotAPI.toFieldCoordinates(closestOp);
 				double angleAux = helper.anguloDestino(dest, myRobotAPI);
 				double angle = helper.degToRad(helper.radToDeg(angleAux) + 160);
-				myRobotAPI.setSteerHeading(angle);	
+				myRobotAPI.setSteerHeading(angle);	*/
+				helper.evitaColision(closestOp, myRobotAPI);
 
 				// 2.- Increase speed
 				myRobotAPI.setSpeed(1000);
@@ -99,10 +101,11 @@ public class Desmarcador extends Behaviour
 			// Nearly opponent, move to another position
 			
 			// 1.- Set steering
-			Vec2 dest = myRobotAPI.toFieldCoordinates(closestOp);
+			/*Vec2 dest = myRobotAPI.toFieldCoordinates(closestOp);
 			double angleAux = helper.anguloDestino(dest, myRobotAPI);
 			double angle = helper.degToRad(helper.radToDeg(angleAux) + 180);
-			myRobotAPI.setSteerHeading(angle);	
+			myRobotAPI.setSteerHeading(angle);	*/
+			helper.evitaColision(closestOp, myRobotAPI);
 
 			// 2.- Increase speed
 			myRobotAPI.setSpeed(1000);
