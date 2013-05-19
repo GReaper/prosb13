@@ -238,4 +238,45 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 		resta.sub(myPos);			
 		return resta.t;		
 	}
+	
+	/**
+	 * Devuelve la posición del oponente más cercano a la portería
+	 * 
+	 * @param myRobotAPI
+	 * @return Vec2 con las coordenadas globales
+	 */
+	public Vec2 porteroEnemigo(RobotAPI myRobotAPI)
+	{		
+		// Tomar todos los enemigos (ego)
+		Vec2[] enms = myRobotAPI.getOpponents();
+		// Tomar portería enemiga (ego)
+		Vec2 port = myRobotAPI.getOpponentsGoal();
+		// Distancia inicial = infinito
+		double dist = Double.MAX_VALUE;
+
+		// Vec2 con candidato inicial
+		Vec2 cand = myRobotAPI.toFieldCoordinates(enms[0]);
+		for (int i=0;i < enms.length; i++)
+		{
+			if (distanciaEntre(myRobotAPI.toFieldCoordinates(enms[i]), myRobotAPI.toFieldCoordinates(port)) < dist)
+			{
+				cand = myRobotAPI.toFieldCoordinates(enms[i]);
+			}			
+		}
+		
+		return cand;		
+	}
+	
+	/**
+	 *  Calcula la distancia entre dos puntos
+	 *  
+	 *  @param origen
+	 *  @param destino
+	 *  @return distancia entre ambos
+	 * 
+	 */
+	public double distanciaEntre(Vec2 o, Vec2 d)
+	{
+		return Math.sqrt(Math.pow((d.x - o.x), 2) + Math.pow((d.y - o.y), 2));
+	}
 }
