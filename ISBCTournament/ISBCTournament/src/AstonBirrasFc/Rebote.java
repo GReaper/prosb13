@@ -8,7 +8,13 @@ public class Rebote extends Behaviour
 {
 
 	private Ayudas ayuda;
-	private enum Estados{SIN_BOLA, IR_POR_BOLA,REBOTARPOSITIVO,AVANCEDESTINOPOSITIVO,REBOTARNEGATIVO,AVANCEDESTINONEGATIVO,LLEGADA};
+	/*
+	private enum Estados{SIN_BOLA, IR_POR_BOLA,REBOTARPOSITIVO,AVANCEDESTINOPOSITIVO,
+		REBOTARNEGATIVO,AVANCEDESTINONEGATIVO,LLEGADA};
+	*/
+	
+	private enum Estados{SIN_BOLA,CON_BOLA,REBOTEPOSITIVO,REBOTENEGATIVO}
+	
 	private float anguloGolpeo;
 	
 	private Estados estado;
@@ -41,7 +47,7 @@ public class Rebote extends Behaviour
 		// TODO Auto-generated method stub
 		
 	}
-
+/*
 	@Override
 	public int takeStep() 
 	{
@@ -169,6 +175,72 @@ public class Rebote extends Behaviour
 		return myRobotAPI.ROBOT_OK;
 	}
 
-
+	*/
+	
+	public int takeStep() 
+	{
+		double angulo;
+		Vec2 myPos;
+		myRobotAPI.setDisplayString(estado.toString());
+		switch(estado)
+		{
+		case SIN_BOLA:	
+						myRobotAPI.setSpeed(1000);
+						angulo=ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI,0.05);					
+						myRobotAPI.setSteerHeading(angulo);	
+						if(ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI, 0.1))
+							estado=Estados.CON_BOLA;
+						break;
+		case CON_BOLA:
+					myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+					if (myRobotAPI.canKick())
+					{
+						myPos=myRobotAPI.getPosition();
+						if(myPos.y>0)
+						
+							estado=Estados.REBOTEPOSITIVO;
+						else
+							estado=Estados.REBOTENEGATIVO;
+						
+					}
+					
+					if(!ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI, 0.1))
+						estado=Estados.SIN_BOLA;
+					
+			
+			
+		case REBOTEPOSITIVO:
+						if(myRobotAPI.canKick())
+						{
+							myRobotAPI.setSteerHeading(ayuda.degToRad(anguloGolpeo));	
+							myRobotAPI.kick();
+							estado=Estados.SIN_BOLA;						
+						}
+						else
+						{
+							myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+						}
+			
+		case REBOTENEGATIVO:
+						if(myRobotAPI.canKick())
+						{
+							myRobotAPI.setSteerHeading(ayuda.degToRad(-anguloGolpeo));	
+							myRobotAPI.kick();
+							estado=Estados.SIN_BOLA;						
+						}
+						else
+						{
+							myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+						}
+		
+			
+						
+			
+		}
+		
+		return 0;
+		
+	}
+	
 
 }
