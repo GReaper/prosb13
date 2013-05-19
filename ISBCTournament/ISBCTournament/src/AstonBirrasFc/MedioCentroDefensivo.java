@@ -34,7 +34,7 @@ public class MedioCentroDefensivo extends Behaviour
 			return myRobotAPI.ROBOT_OK;
 		}
 		
-		// If the ball is in our field the MCD can move until the midle section,
+		// If the ball is in our field the MCD can move until the middle section,
 		// else he may only remain in the first third section
 		if (myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()).x * myRobotAPI.getFieldSide() >= 0)
 		{
@@ -78,10 +78,24 @@ public class MedioCentroDefensivo extends Behaviour
 			}
 		}
 		
+		// Decide the side to kick the ball
+		Vec2 dest = myRobotAPI.getOpponentsGoal();
+		// Decide where to kick the ball
+		if (myRobotAPI.getPosition().y > 0)
+		{
+			// Kick to the upper middle side
+			dest = new Vec2(0, myRobotAPI.getUpperFieldBound());
+		}
+		else
+		{
+			// Kick to the lower middle side
+			dest = new Vec2(0, myRobotAPI.getLowerFieldBound());				
+		}
+		
 		// Check if the player can kick the ball
 		if (myRobotAPI.canKick())
 		{
-			Vec2 dest = myRobotAPI.getOpponentsGoal();
+			/*Vec2 dest = myRobotAPI.getOpponentsGoal();
 			// Decide where to kick the ball
 			if (myRobotAPI.getPosition().y > 0)
 			{
@@ -92,9 +106,10 @@ public class MedioCentroDefensivo extends Behaviour
 			{
 				// Kick to the lower middle side
 				dest = new Vec2(0, myRobotAPI.getLowerFieldBound());				
-			}
-			double angle = helper.anguloNecesario(dest, myRobotAPI, 0.01);			
-			myRobotAPI.setSteerHeading(angle);
+			}*/
+			//double angle = helper.anguloNecesario(dest, myRobotAPI, 0.01);			
+			//myRobotAPI.setSteerHeading(angle);
+			myRobotAPI.setBehindBall(myRobotAPI.toEgocentricalCoordinates(dest));
 			myRobotAPI.kick();
 			
 			// Set displayed text
@@ -107,7 +122,22 @@ public class MedioCentroDefensivo extends Behaviour
 		
 		// Go to ball to follow it
 		myRobotAPI.setSpeed(1000);
-		myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+		/*Vec2 dest = myRobotAPI.getOpponentsGoal();
+		// Decide where to kick the ball
+		if (myRobotAPI.getPosition().y > 0)
+		{
+			// Kick to the upper middle side
+			dest = new Vec2(0, myRobotAPI.getUpperFieldBound());
+		}
+		else
+		{
+			// Kick to the lower middle side
+			dest = new Vec2(0, myRobotAPI.getLowerFieldBound());				
+		}*/
+		//double angle = helper.anguloNecesario(dest, myRobotAPI, 0.01);			
+		//myRobotAPI.setSteerHeading(angle);
+		myRobotAPI.setBehindBall(myRobotAPI.toEgocentricalCoordinates(dest));
+		//myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 		// Set displayed text
 		myRobotAPI.setDisplayString("MCD (FB)");
 		
