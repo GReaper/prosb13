@@ -18,11 +18,11 @@ public class Entrenador extends TeamManager
 	
 	public void onTakeStep() 
 	{
-		//_players[0].setBehaviour(_behaviours[2]);
-		//_players[1].setBehaviour(_behaviours[6]);
+		_players[0].setBehaviour(_behaviours[2]);
+		_players[1].setBehaviour(_behaviours[6]);
 		_players[2].setBehaviour(_behaviours[1]);
-		//_players[3].setBehaviour(_behaviours[4]);
-		//_players[4].setBehaviour(_behaviours[3]);
+		_players[3].setBehaviour(_behaviours[4]);
+		_players[4].setBehaviour(_behaviours[3]);
 		
 	}
 	
@@ -33,7 +33,6 @@ public class Entrenador extends TeamManager
 	
 	public Behaviour[] createBehaviours() 
 	{
-		/*
 		return new Behaviour[] {new GoToBall(), 
 								new QuietoParao(),
 								new MedioCentroAtacante(),
@@ -41,9 +40,6 @@ public class Entrenador extends TeamManager
 								new Desmarcador(),
 								new MedioCentroDefensivo(),
 								new Regateador()};
-		*
-		*/
-		return new Behaviour[]{new QuietoParao(), new Rebote()};
 		
 	}
 }
