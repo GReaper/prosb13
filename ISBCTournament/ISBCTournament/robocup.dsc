@@ -86,7 +86,7 @@ object EDU.gatech.cc.is.simulation.ObstacleInvisibleSim -2.047 -1.4396 0 1.0
 // from getting jumpy on slow machines, or when/if your process gets 
 // swapped out. 
 
-maxtimestep 4 
+maxtimestep 2 
 
 //====== 
 // TIMEOUT 
@@ -175,7 +175,6 @@ robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX
 
 //======EAST TEAM====== 
 eastname EastTeam 
-<<<<<<< HEAD
 robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
 1.2 0 0 xff3333 xffff66 2 
 robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
@@ -185,16 +184,5 @@ robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam
 robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
 .15 0 0 xff3333 xffff66 2 
 robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
-=======
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070812.MegaTeam7_7 
-1.2 0 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070812.MegaTeam7_7 
-.5 0 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070812.MegaTeam7_7 
-.15 .5 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070812.MegaTeam7_7 
-.15 0 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070812.MegaTeam7_7 
->>>>>>> 00a950da0de9680f9896148ad9aac7638ad2bcce
 .15 -.5 0 xff3333 xffff66 2 
 

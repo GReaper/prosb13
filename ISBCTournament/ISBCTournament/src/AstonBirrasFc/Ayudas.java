@@ -184,7 +184,7 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 	 * 
 	 * @param destino en coordenadas globales
 	 * @param myRobotAPI
-	 * @return el �ngulo necesario
+	 * @return el �ngulo necesario
 	 */
 	public double anguloNecesario(Vec2 destino,RobotAPI myRobotAPI,double parada)
 	{		
@@ -206,5 +206,36 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 		
 		return resta.t;		
 	}
-
+	
+	/**
+	 * Determina si dos puntos están muy cerca. El factor de cercanía dependera, para mayor
+	 * precisión, del radio de jugador.
+	 * @param origen (coordenadas globales)
+	 * @param destino (coordenadas globales)
+	 * @param factor. Medida de margen para cercanía
+	 * @return booleano indicando si están cerca o no
+	 */
+	public boolean cercanoRadio(Vec2 origen, Vec2 destino, double factor)
+	{
+		// Buscar en circunferencia
+		return origen.x > destino.x-factor && 
+				origen.x < destino.x+factor &&
+				origen.y > destino.y-factor && 
+				origen.y < destino.y+factor;
+	}
+	
+	/**
+	 * Devuelve el angulo necesario para llegar a un punto
+	 * 
+	 * @param destino en coordenadas globales
+	 * @param myRobotAPI
+	 * @return el angulo necesario en radianes
+	 */
+	public double anguloDestino(Vec2 destino,RobotAPI myRobotAPI)
+	{		
+		Vec2 myPos = myRobotAPI.getPosition();
+		Vec2 resta=(Vec2) destino.clone();
+		resta.sub(myPos);			
+		return resta.t;		
+	}
 }

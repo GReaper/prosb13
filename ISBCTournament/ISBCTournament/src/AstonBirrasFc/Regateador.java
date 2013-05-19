@@ -22,15 +22,15 @@ public class Regateador extends Behaviour
 		Vec2 closestOp = myRobotAPI.getClosestOpponent();
 		
 		// Check if the ball is not close enough
-		if (!helper.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI, myRobotAPI.getPlayerRadius()*2.5))
+		if (!helper.cercanoRadio(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI.getPlayerRadius()*3))
 		{
 			// Check whether the player is blocked by the closest teammate and avoid him
 			if (myRobotAPI.isBlocking(myRobotAPI.getClosestMate()))
 			{
 				// 1.- Set steering
 				Vec2 dest = myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestMate());
-				double angleAux = helper.anguloNecesario(dest, myRobotAPI, 0.01);
-				double angle = helper.degToRad(helper.radToDeg(angleAux) + 180);
+				double angleAux = helper.anguloDestino(dest, myRobotAPI);
+				double angle = helper.degToRad(helper.radToDeg(angleAux) + 160);
 				myRobotAPI.setSteerHeading(angle);	
 
 				// 2.- Increase speed
@@ -44,13 +44,13 @@ public class Regateador extends Behaviour
 			}
 			
 			// Check whether that opponent is too close or if the player is blocked
-			if (helper.cercano(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(closestOp), myRobotAPI, myRobotAPI.getPlayerRadius()*2)
+			if (helper.cercanoRadio(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(closestOp), myRobotAPI.getPlayerRadius()*2)
 					|| myRobotAPI.isBlocking(closestOp))
 			{
 				// 1.- Set steering
 				Vec2 dest = myRobotAPI.toFieldCoordinates(closestOp);
-				double angleAux = helper.anguloNecesario(dest, myRobotAPI, 0.01);
-				double angle = helper.degToRad(helper.radToDeg(angleAux) + 150);
+				double angleAux = helper.anguloDestino(dest, myRobotAPI);
+				double angle = helper.degToRad(helper.radToDeg(angleAux) + 160);
 				myRobotAPI.setSteerHeading(angle);	
 
 				// 2.- Increase speed
@@ -64,7 +64,7 @@ public class Regateador extends Behaviour
 			}
 			
 			// Set max speed
-			myRobotAPI.setSpeed(1000);
+			myRobotAPI.setSpeed(0.8);
 			
 			// Go to ball
 			myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
@@ -77,7 +77,7 @@ public class Regateador extends Behaviour
 		}
 		
 		// Check whether that opponent is too close or if the player is blocked
-		if (helper.cercano(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(closestOp), myRobotAPI, myRobotAPI.getPlayerRadius()*2)
+		if (helper.cercanoRadio(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(closestOp), myRobotAPI.getPlayerRadius()*2)
 				|| myRobotAPI.isBlocking(closestOp))
 		{
 			Vec2 heading = myRobotAPI.getOpponentsGoal();
@@ -119,7 +119,7 @@ public class Regateador extends Behaviour
 		}
 		
 		// Push the ball towards the opponent's goal
-		myRobotAPI.setSpeed(0.3);
+		myRobotAPI.setSpeed(0.4);
 		myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 		myRobotAPI.setDisplayString("Reg. (ToGoal)");		
 		 
