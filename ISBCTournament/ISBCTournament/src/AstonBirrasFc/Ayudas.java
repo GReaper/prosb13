@@ -98,6 +98,29 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 		
 	}
 	/**
+	 * Calcula cual es la mitad del campo en la X
+	 * @param myRobotAPI
+	 * @return
+	 */
+	public double miMitadX(RobotAPI myRobotAPI)
+	{
+		double derecha=RobotAPI.getRightFieldBound();
+		derecha*=0.5;
+		int equipo=myRobotAPI.getFieldSide();
+		
+			
+		if(equipo==RobotAPI.WEST_FIELD)
+		{
+			return -derecha;
+			
+		}
+		else
+		{
+			return derecha;			
+		}
+	}
+	
+	/**
 	 * Calcula cual es el cuarto del campo en la X
 	 * @param myRobotAPI
 	 * @return
@@ -105,24 +128,18 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 	public double miCuartoX(RobotAPI myRobotAPI)
 	{
 		double derecha=RobotAPI.getRightFieldBound();
-		derecha*=0.5;
+		derecha*=0.25;
 		int equipo=myRobotAPI.getFieldSide();
 		
-		Vec2 posicion= myRobotAPI.getPosition();
-		
+			
 		if(equipo==RobotAPI.WEST_FIELD)
 		{
-			if(-derecha> posicion.x)
-				return -derecha;
-			else
-				return posicion.x;
+			return -derecha;
+			
 		}
 		else
 		{
-			if(derecha< posicion.x)
-				return derecha;
-			else
-				return posicion.x;
+			return derecha;			
 		}
 	}
 	

@@ -43,7 +43,7 @@ public class Desmarcador extends Behaviour
 		Double quarterSize = (myRobotAPI.getRightFieldBound() - myRobotAPI.getLeftFieldBound()) / 4;
 		if (myRobotAPI.getPosition().x * myRobotAPI.getFieldSide() >= -quarterSize)
 		{
-			// Check whether that opponent is too close or if hte player is blocked
+			// Check whether that opponent is too close or if the player is blocked
 			if (helper.cercano(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(closestOp), myRobotAPI, myRobotAPI.getPlayerRadius()*2)
 					|| myRobotAPI.isBlocking(closestOp))
 			{
