@@ -283,12 +283,11 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 		Vec2[] enms = myRobotAPI.getOpponents();
 		// Tomar portería enemiga (ego)
 		Vec2 port = myRobotAPI.getOpponentsGoal();
-		// Distancia inicial = infinito
-		double dist = Double.MAX_VALUE;
 
 		// Vec2 con candidato inicial
 		Vec2 cand = myRobotAPI.toFieldCoordinates(enms[0]);
-		for (int i=0;i < enms.length; i++)
+		double dist = distanciaEntre(cand, myRobotAPI.toFieldCoordinates(port));
+		for (int i=1;i < enms.length; i++)
 		{
 			if (distanciaEntre(myRobotAPI.toFieldCoordinates(enms[i]), myRobotAPI.toFieldCoordinates(port)) < dist)
 			{

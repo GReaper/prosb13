@@ -42,27 +42,8 @@ public class BloqueaPortero extends Behaviour
 				// Return
 				return myRobotAPI.ROBOT_OK;
 			}
-			
-			// Check whether that opponent is too close or if the player is blocked
-			if (helper.cercanoRadio(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(closestOp), myRobotAPI.getPlayerRadius()*2))
-			{
-				// 1.- Set steering
-				/*Vec2 dest = myRobotAPI.toFieldCoordinates(closestOp);
-				double angleAux = helper.anguloDestino(dest, myRobotAPI);
-				double angle = helper.degToRad(helper.radToDeg(angleAux) + 160);
-				myRobotAPI.setSteerHeading(angle);*/
-				helper.evitaColision(closestOp, myRobotAPI);
-	
-				// 2.- Increase speed
-				myRobotAPI.setSpeed(1000);
-				
-				// Set displayed text
-				myRobotAPI.setDisplayString("BloqPort. (AO1)");
-				
-				// Return
-				return myRobotAPI.ROBOT_OK;
-			}
-			
+
+			// Check for opponent blocking
 			if (myRobotAPI.opponentBlocking())
 			{
 				// 1.- Set steering
@@ -80,6 +61,28 @@ public class BloqueaPortero extends Behaviour
 				
 				// Return
 				return myRobotAPI.ROBOT_OK;				
+			}
+			
+			// Check whether that opponent is too close or if the player is blocked
+			// TODO : revisar
+			//if (helper.cercanoRadio(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(closestOp), myRobotAPI.getPlayerRadius()*2))
+			if (closestOp.r < myRobotAPI.getPlayerRadius()*2)
+			{
+				// 1.- Set steering
+				/*Vec2 dest = myRobotAPI.toFieldCoordinates(closestOp);
+				double angleAux = helper.anguloDestino(dest, myRobotAPI);
+				double angle = helper.degToRad(helper.radToDeg(angleAux) + 160);
+				myRobotAPI.setSteerHeading(angle);*/
+				helper.evitaColision(closestOp, myRobotAPI);
+	
+				// 2.- Increase speed
+				myRobotAPI.setSpeed(1000);
+				
+				// Set displayed text
+				myRobotAPI.setDisplayString("BloqPort. (AO1)");
+				
+				// Return
+				return myRobotAPI.ROBOT_OK;
 			}
 			
 			// 1.- Set steering
