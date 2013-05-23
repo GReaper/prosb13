@@ -65,8 +65,8 @@ public class BloqueaPortero extends Behaviour
 			
 			// Check whether that opponent is too close or if the player is blocked
 			// TODO : revisar
-			//if (helper.cercanoRadio(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(closestOp), myRobotAPI.getPlayerRadius()*2))
-			if (closestOp.r < myRobotAPI.getPlayerRadius()*2)
+			if (helper.cercanoRadio(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(closestOp), myRobotAPI.getPlayerRadius()*2))
+			//if (closestOp.r < 0.5D/*myRobotAPI.getPlayerRadius()*2*/)
 			{
 				// 1.- Set steering
 				/*Vec2 dest = myRobotAPI.toFieldCoordinates(closestOp);
