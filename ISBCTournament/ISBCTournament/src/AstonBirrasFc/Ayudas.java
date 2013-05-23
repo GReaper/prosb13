@@ -259,7 +259,7 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 		double angle = 0;
 		if (jugador.x <= 0)
 		{
-			angle = myRobotAPI.normalizeZero(0);
+			angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) + 2*Math.PI);
 		}
 		else if (jugador.y <= 0)
 		{
