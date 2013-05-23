@@ -257,7 +257,11 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 	public void evitaColision(Vec2 jugador, RobotAPI myRobotAPI)
 	{
 		double angle = 0;
-		if (jugador.y <= 0)
+		if (jugador.x <= 0)
+		{
+			angle = myRobotAPI.normalizeZero(0);
+		}
+		else if (jugador.y <= 0)
 		{
 			angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) + Math.PI);
 		}

@@ -135,6 +135,12 @@ public class Desmarcador extends Behaviour
 			myRobotAPI.setDisplayString("Desm. (GTB)");
 		}
 		
+		// Try to kick
+		if (myRobotAPI.alignedToBallandGoal() && myRobotAPI.canKick())
+		{
+			myRobotAPI.kick();
+		}
+		
 		return myRobotAPI.ROBOT_OK;
 	}
 

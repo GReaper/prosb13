@@ -120,6 +120,12 @@ public class Regateador extends Behaviour
 			return myRobotAPI.ROBOT_OK;
 		}
 		
+		// Try to kick
+		if (myRobotAPI.alignedToBallandGoal() && myRobotAPI.canKick())
+		{
+			myRobotAPI.kick();
+		}
+		
 		// Push the ball towards the opponent's goal
 		myRobotAPI.setSpeed(0.4);
 		myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
