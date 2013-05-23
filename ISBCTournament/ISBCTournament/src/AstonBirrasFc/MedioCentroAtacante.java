@@ -67,7 +67,7 @@ public class MedioCentroAtacante extends Behaviour
 		
 			case ZONAC: 
 				
-				nuevaX=ayuda.miCuartoX(myRobotAPI);
+				nuevaX=ayuda.miMitadX(myRobotAPI);
 				
 				destino= new Vec2(nuevaX, 0);
 				angulo=ayuda.irAPosicionNoParando(destino, myRobotAPI);
@@ -144,6 +144,10 @@ public class MedioCentroAtacante extends Behaviour
 					if(!myRobotAPI.closestToBall())
 					{
 						estado=Estados.IRPELOTA;
+					}
+					else
+					{
+						estado=Estados.DISPARO;
 					}
 				break;
 				

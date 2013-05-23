@@ -1,5 +1,7 @@
 package AstonBirrasFc;
 
+import java.util.SortedMap;
+
 import EDU.gatech.cc.is.util.Vec2;
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
@@ -8,6 +10,9 @@ public class LocoBola extends Behaviour
 {
 
 	private Ayudas ayuda;
+	
+	private enum Estado{ZONA_A,ZONA_B,ZONA_C}
+	
 	@Override
 	public void configure() 
 	{
@@ -40,65 +45,64 @@ public class LocoBola extends Behaviour
 	public int takeStep() 
 	{
 		
-		if(ayuda.pelotaEnMiCampo(myRobotAPI))
-		{	
-			
-			if(ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI, 0.15) || myRobotAPI.closestToBall())
-			{
-				myRobotAPI.setSpeed(0.4);
-				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
-				if (myRobotAPI.canKick())
-					 myRobotAPI.kick();
-				
-				myRobotAPI.setDisplayString("Detras" );
-			}
-			else
-			{
-			
-				myRobotAPI.setSpeed(1000);
-				double angulo=ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI,0.05);
-				
-					
-				myRobotAPI.setSteerHeading(angulo);	
-				if (myRobotAPI.canKick() && myRobotAPI.alignedToBallandGoal())
-					 myRobotAPI.kick();
-				
-				
-				myRobotAPI.setDisplayString("Loco" );
-				
-			}
-			 
-		}
-		else
+		Estado zona= zonaBola();
+		myRobotAPI.setDisplayString(zona.name()); 
+		switch(zona)
 		{
-			double micuarto=ayuda.miCuartoX(myRobotAPI);
-			Vec2 destino=ayuda.getMiCentro(myRobotAPI);// new Vec2(micuarto, myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()).y);
-			//destino=myRobotAPI.toEgocentricalCoordinates(destino);
-			myRobotAPI.setSpeed(1000);
-			double angulo=ayuda.irAPosicionParando(destino, myRobotAPI,0.01);
-			
-			myRobotAPI.setSteerHeading(angulo);	
-			
-			
-			myRobotAPI.setDisplayString("A centro");
-			
-		}
+			case ZONA_A: bloquearRivalCercano(); break;
+			case ZONA_B: irAPorBola(); break;
+			case ZONA_C: recolocar();break;
 		
-		/*
-		myRobotAPI.setSpeed(1000);
-		double angulo=ayuda.irAPosicion(new Vec2(0, 0.3), myRobotAPI);
-		if(angulo==Double.MAX_VALUE)
-		{
-			myRobotAPI.setSpeed(0);
+		
 		}
-		else
-		{
-			myRobotAPI.setSteerHeading(angulo);	
-		}
-		*/
-		return myRobotAPI.ROBOT_OK;
+				
+		
+		return 0;
 	}
 
-
+	public Estado zonaBola()
+	{
+		if(ayuda.pelotaEnMiCampo(myRobotAPI))
+		{
+			Vec2 pelota= myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
+			if(Math.abs(pelota.x)>Math.abs(ayuda.miMitadX(myRobotAPI)))
+			{
+				return Estado.ZONA_A;
+			}
+			return Estado.ZONA_B;
+			
+		}
+		else
+		{
+			return Estado.ZONA_C;
+		}
+		
+		
+	}
+	
+	private void irAPorBola()
+	{
+		myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+	}
+	
+	private void recolocar()
+	{
+		double x=ayuda.miCuartoX(myRobotAPI);
+		double y= myRobotAPI.getBall().y;
+		Vec2 destino=new Vec2(x, y);
+		double angle=ayuda.irAPosicionParando(destino, myRobotAPI,0.005);
+		myRobotAPI.setSteerHeading(angle);
+		
+	}
+	
+	private void bloquearRivalCercano()
+	{
+		SortedMap<Double,Vec2> rivales=myRobotAPI.getSortedOpponents();
+		double val1=rivales.firstKey();
+		Vec2 rivalCercano=rivales.get(val1);
+		double angle=ayuda.irAPosicionNoParando(rivalCercano, myRobotAPI);
+		myRobotAPI.setSteerHeading(angle);		
+		
+	}
 
 }
