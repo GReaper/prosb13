@@ -256,7 +256,7 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 	 */
 	public void evitaColision(Vec2 jugador, RobotAPI myRobotAPI)
 	{
-		double angle = myRobotAPI.normalizeZero(jugador.t + Math.PI);
+		double angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) + Math.PI);
 		//double angle = jugador.t + Math.PI;
 		myRobotAPI.setSteerHeading(angle);
 	}
@@ -269,7 +269,7 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 	 */
 	public void evitarBloqueo(Vec2 jugador, RobotAPI myRobotAPI)
 	{
-		double angle = myRobotAPI.normalizeZero(jugador.t + 2*Math.PI);
+		double angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) + Math.PI);
 		myRobotAPI.setSteerHeading(angle);
 	}
 	
