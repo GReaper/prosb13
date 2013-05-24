@@ -123,7 +123,24 @@ public class Desmarcador extends Behaviour
 			// Set displayed text
 			myRobotAPI.setDisplayString("Desm. (S)");
 		}
-		 
+		
+		// Check if the player is the closest to ball and there aren't mates closer
+		if (myRobotAPI.closestToBall() && !helper.cercanoRadio(myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestMate()), myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI.getPlayerRadius()*2.5))
+		{
+			// Head to opponent's goal
+			myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+			// Increase speed
+			myRobotAPI.setSpeed(0.7);
+			// Set displayed text
+			myRobotAPI.setDisplayString("Desm. (GTB)");
+		}
+		
+		// Try to kick
+		if (myRobotAPI.alignedToBallandGoal() && myRobotAPI.canKick())
+		{
+			myRobotAPI.kick();
+		}
+		
 		return myRobotAPI.ROBOT_OK;
 	}
 
