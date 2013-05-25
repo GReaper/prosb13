@@ -18,15 +18,7 @@ public class MedioCentroDefensivo extends Behaviour
 		// Check whether the player is blocked by the closest teammate
 		if (myRobotAPI.isBlocking(myRobotAPI.getClosestMate()))
 		{
-			// 1.- Set steering
-			/*Vec2 dest = myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestMate());
-			double angleAux = helper.anguloDestino(dest, myRobotAPI);
-			double angle = helper.degToRad(helper.radToDeg(angleAux) + 180);
-			myRobotAPI.setSteerHeading(angle);	*/
 			helper.evitarBloqueo(myRobotAPI.getClosestMate(), myRobotAPI);
-
-			// 2.- Increase speed
-			//myRobotAPI.setSpeed(1000);
 			
 			// Set displayed text
 			myRobotAPI.setDisplayString("MCD (AF)");
@@ -114,20 +106,6 @@ public class MedioCentroDefensivo extends Behaviour
 		// Check if the player can kick the ball
 		if (myRobotAPI.canKick())
 		{
-			/*Vec2 dest = myRobotAPI.getOpponentsGoal();
-			// Decide where to kick the ball
-			if (myRobotAPI.getPosition().y > 0)
-			{
-				// Kick to the upper middle side
-				dest = new Vec2(0, myRobotAPI.getUpperFieldBound());
-			}
-			else
-			{
-				// Kick to the lower middle side
-				dest = new Vec2(0, myRobotAPI.getLowerFieldBound());				
-			}*/
-			//double angle = helper.anguloDestino(dest, myRobotAPI);			
-			//myRobotAPI.setSteerHeading(angle);
 			myRobotAPI.setBehindBall(myRobotAPI.toEgocentricalCoordinates(dest));
 			myRobotAPI.kick();
 			
@@ -135,28 +113,11 @@ public class MedioCentroDefensivo extends Behaviour
 			myRobotAPI.setDisplayString("MCD (K)");
 		}
 		
-		// Nothing to do. Set speed to 0
-		//myRobotAPI.setSpeed(0);
-		//myRobotAPI.setDisplayString("MCD (W)");
-		
 		// Go to ball to follow it
 		myRobotAPI.setSpeed(1000);
-		/*Vec2 dest = myRobotAPI.getOpponentsGoal();
-		// Decide where to kick the ball
-		if (myRobotAPI.getPosition().y > 0)
-		{
-			// Kick to the upper middle side
-			dest = new Vec2(0, myRobotAPI.getUpperFieldBound());
-		}
-		else
-		{
-			// Kick to the lower middle side
-			dest = new Vec2(0, myRobotAPI.getLowerFieldBound());				
-		}*/
-		//double angle = helper.anguloDestino(dest, myRobotAPI);			
-		//myRobotAPI.setSteerHeading(angle);
+		
 		myRobotAPI.setBehindBall(myRobotAPI.toEgocentricalCoordinates(dest));
-		//myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+
 		// Set displayed text
 		myRobotAPI.setDisplayString("MCD (FB)");
 		

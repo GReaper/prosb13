@@ -1,7 +1,5 @@
 package AstonBirrasFc;
 
-import java.util.Random;
-
 import EDU.gatech.cc.is.util.Vec2;
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
@@ -26,16 +24,8 @@ public class BloqueaPortero extends Behaviour
 			// Check whether the player is blocked by the closest teammate
 			if (myRobotAPI.isBlocking(myRobotAPI.getClosestMate()))
 			{
-				// 1.- Set steering
-				/*Vec2 dest = myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestMate());
-				double angleAux = helper.anguloDestino(dest, myRobotAPI);
-				double angle = helper.degToRad(helper.radToDeg(angleAux) + 160);
-				myRobotAPI.setSteerHeading(angle);*/
 				helper.evitarBloqueo(myRobotAPI.getClosestMate(), myRobotAPI);
 	
-				// 2.- Increase speed
-				//myRobotAPI.setSpeed(1000);
-				
 				// Set displayed text
 				myRobotAPI.setDisplayString("BloqPort. (AF)");
 
@@ -46,16 +36,8 @@ public class BloqueaPortero extends Behaviour
 			// Check for opponent blocking
 			if (myRobotAPI.opponentBlocking())
 			{
-				// 1.- Set steering
-				/*Vec2 dest = myRobotAPI.toFieldCoordinates(closestOp);
-				double angleAux = helper.anguloDestino(dest, myRobotAPI);
-				double angle = helper.degToRad(helper.radToDeg(angleAux) + 160);
-				myRobotAPI.setSteerHeading(angle);*/
 				helper.evitarBloqueo(closestOp, myRobotAPI);
 	
-				// 2.- Increase speed
-				//myRobotAPI.setSpeed(1000);
-				
 				// Set displayed text
 				myRobotAPI.setDisplayString("BloqPort. (AO2)");
 				
@@ -63,21 +45,11 @@ public class BloqueaPortero extends Behaviour
 				return myRobotAPI.ROBOT_OK;				
 			}
 			
-			// Check whether that opponent is too close or if the player is blocked
-			// TODO : revisar
+			// Check whether that opponent is too close
 			if (helper.cercanoRadio(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(closestOp), myRobotAPI.getPlayerRadius()*2))
-			//if (closestOp.r < 0.5D/*myRobotAPI.getPlayerRadius()*2*/)
 			{
-				// 1.- Set steering
-				/*Vec2 dest = myRobotAPI.toFieldCoordinates(closestOp);
-				double angleAux = helper.anguloDestino(dest, myRobotAPI);
-				double angle = helper.degToRad(helper.radToDeg(angleAux) + 160);
-				myRobotAPI.setSteerHeading(angle);*/
 				helper.evitaColision(closestOp, myRobotAPI);
-	
-				// 2.- Increase speed
-				//myRobotAPI.setSpeed(1000);
-				
+
 				// Set displayed text
 				myRobotAPI.setDisplayString("BloqPort. (AO1)");
 				

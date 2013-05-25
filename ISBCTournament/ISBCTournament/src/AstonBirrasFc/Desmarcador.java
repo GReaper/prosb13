@@ -23,16 +23,8 @@ public class Desmarcador extends Behaviour
 		// Check whether the player is blocked by the closest teammate
 		if (myRobotAPI.isBlocking(myRobotAPI.getClosestMate()))
 		{
-			// 1.- Set steering
-			/*Vec2 dest = myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestMate());
-			double angleAux = helper.anguloDestino(dest, myRobotAPI);
-			double angle = helper.degToRad(helper.radToDeg(angleAux) + 160);
-			myRobotAPI.setSteerHeading(angle);	*/
 			helper.evitarBloqueo(myRobotAPI.getClosestMate(), myRobotAPI);
 
-			// 2.- Increase speed
-			//myRobotAPI.setSpeed(1000);
-			
 			// Set displayed text
 			myRobotAPI.setDisplayString("Desm. (AF)");
 			
@@ -47,16 +39,8 @@ public class Desmarcador extends Behaviour
 			// Check whether that opponent is blocking
 			if (myRobotAPI.isBlocking(closestOp))
 			{
-				// 1.- Set steering
-				/*Vec2 dest = myRobotAPI.toFieldCoordinates(closestOp);
-				double angleAux = helper.anguloDestino(dest, myRobotAPI);
-				double angle = helper.degToRad(helper.radToDeg(angleAux) + 160);
-				myRobotAPI.setSteerHeading(angle);	*/
 				helper.evitarBloqueo(closestOp, myRobotAPI);
 
-				// 2.- Increase speed
-				//myRobotAPI.setSpeed(1000);
-				
 				// Set displayed text
 				myRobotAPI.setDisplayString("Desm. (AO)");
 				
@@ -67,16 +51,8 @@ public class Desmarcador extends Behaviour
 			// Check whether that opponent is too close
 			if (helper.cercanoRadio(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(closestOp), myRobotAPI.getPlayerRadius()*2))
 			{
-				// 1.- Set steering
-				/*Vec2 dest = myRobotAPI.toFieldCoordinates(closestOp);
-				double angleAux = helper.anguloDestino(dest, myRobotAPI);
-				double angle = helper.degToRad(helper.radToDeg(angleAux) + 160);
-				myRobotAPI.setSteerHeading(angle);	*/
 				helper.evitaColision(closestOp, myRobotAPI);
 
-				// 2.- Increase speed
-				//myRobotAPI.setSpeed(1000);
-				
 				// Set displayed text
 				myRobotAPI.setDisplayString("Desm. (AO)");
 				
@@ -118,17 +94,8 @@ public class Desmarcador extends Behaviour
 		if (helper.cercanoRadio(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(closestOp), myRobotAPI.getPlayerRadius()*2))
 		{
 			// Nearly opponent, move to another position
-			
-			// 1.- Set steering
-			/*Vec2 dest = myRobotAPI.toFieldCoordinates(closestOp);
-			double angleAux = helper.anguloDestino(dest, myRobotAPI);
-			double angle = helper.degToRad(helper.radToDeg(angleAux) + 180);
-			myRobotAPI.setSteerHeading(angle);	*/
 			helper.evitaColision(closestOp, myRobotAPI);
-
-			// 2.- Increase speed
-			//myRobotAPI.setSpeed(1000);
-
+			
 			// Set displayed text
 			myRobotAPI.setDisplayString("Desm. (D)");
 		}
