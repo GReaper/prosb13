@@ -84,7 +84,7 @@ public class Entrenador extends TeamManager
 		 *  
 		 *  Agregamos un pepe o bloqueador atrás para defender más
 		 */
-		else if (myRobotAPI.getMyScore() == myRobotAPI.getOpponentScore())
+		else if (myRobotAPI.getMyScore() > myRobotAPI.getOpponentScore())
 		{
 			// Cambiar portero por MC si es necesario
 			if (_players[0].getRobotAPI().opponentBlocking())
@@ -102,22 +102,26 @@ public class Entrenador extends TeamManager
 
 			// Si el desmarcador "inicial" tiene cerca la bola, el delantero pasa a 
 			// bloquear al portero y el desm. a regateador
+			// Por ir ganando, agregamos otro Pepe
 			if (helper.cercanoRadio(_players[4].getRobotAPI().getPosition(), 
 									_players[4].getRobotAPI().toFieldCoordinates(_players[4].getRobotAPI().getBall()), 
 									_players[4].getRobotAPI().getPlayerRadius()*3))
 			{
-				_players[2].setBehaviour(_behaviours[2]);
+				// TODO: cambiar por PEPE!!! Ahora mismo está en MCD
+				_players[2].setBehaviour(_behaviours[5]);
 				_players[3].setBehaviour(_behaviours[8]);
 				_players[4].setBehaviour(_behaviours[6]);
 				
 			}
 			// Si es al revés, que el delantero "inicial" es quien tiene cerca la bola,
 			// éste pasa a regateador y el desmarcador a bloqueador
+			// Por ir ganando, agregamos otro MCD (si esto no funciona, cambiar por Pepe)
 			else if (helper.cercanoRadio(_players[3].getRobotAPI().getPosition(), 
 						_players[3].getRobotAPI().toFieldCoordinates(_players[4].getRobotAPI().getBall()), 
 						_players[3].getRobotAPI().getPlayerRadius()*3))
 			{
-				_players[2].setBehaviour(_behaviours[2]);
+				// TODO: cambiar por PEPE!!! Ahora mismo está en MCD
+				_players[2].setBehaviour(_behaviours[5]);
 				_players[3].setBehaviour(_behaviours[6]);
 				_players[4].setBehaviour(_behaviours[8]);
 				
@@ -128,7 +132,7 @@ public class Entrenador extends TeamManager
 			{
 				// TODO: falta el jugador PEPE!
 				// Cambio a reboteador.
-				_players[2].setBehaviour(_behaviours[3]);
+				_players[2].setBehaviour(_behaviours[5]);
 				_players[3].setBehaviour(_behaviours[9]);
 				_players[4].setBehaviour(_behaviours[4]);
 			}
