@@ -271,6 +271,7 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 		}		
 		//double angle = jugador.t + Math.PI;
 		myRobotAPI.setSteerHeading(angle);
+		myRobotAPI.setSpeed(1000);
 	}
 
 	/**
