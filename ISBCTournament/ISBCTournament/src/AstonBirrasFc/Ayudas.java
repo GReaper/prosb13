@@ -286,14 +286,28 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 
 		// Si el angulo es el correcto, aumentar velocidad. Si no, detener y colocar
 		// angulo
-		if  (
-			(myRobotAPI.normalizeZero(myRobotAPI.getSteerHeading()) >=
-			myRobotAPI.normalizeZero(anguloDestino(jugador, myRobotAPI) + Math.PI))
-			||
-			(myRobotAPI.normalizeZero(myRobotAPI.getSteerHeading()) <=
-				myRobotAPI.normalizeZero(anguloDestino(jugador, myRobotAPI) - Math.PI))
-			)
+		//if  (
+		//	(/*myRobotAPI.normalizeZero(*/myRobotAPI.getSteerHeading()/*)*/ >=
+		//		/*myRobotAPI.normalizeZero(*/(myRobotAPI.normalizeZero(jugador.t) + 2*Math.PI)/*)*/*0.75)
+		//	||
+		//	(/*myRobotAPI.normalizeZero(*/myRobotAPI.getSteerHeading()/*)*/ <=
+		//		/*myRobotAPI.normalizeZero(*/(myRobotAPI.normalizeZero(jugador.t) - 2*Math.PI)/*)*/*0.75)
+		//	)
+		if (myRobotAPI.normalizeZero(myRobotAPI.getSteerHeading()) == myRobotAPI.normalizeZero(jugador.t - Math.PI))
 		{
+			if (jugador.y <= 0)
+			{
+				angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) + Math.PI);
+			}
+			else
+			{
+				angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) - Math.PI);
+			}	
+			myRobotAPI.setSteerHeading(angle);
+			myRobotAPI.setSpeed(1);	
+		}
+		else
+		{		
 			myRobotAPI.setSpeed(0);
 			if (jugador.y <= 0)
 			{
@@ -304,19 +318,6 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 				angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) - Math.PI);
 			}	
 			myRobotAPI.setSteerHeading(angle);
-		}
-		else
-		{
-			if (jugador.y <= 0)
-			{
-				angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) + Math.PI);
-			}
-			else
-			{
-				angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) - Math.PI);
-			}	
-			myRobotAPI.setSteerHeading(angle);
-			myRobotAPI.setSpeed(1);			
 		}
 	}
 	
