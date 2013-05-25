@@ -86,7 +86,7 @@ object EDU.gatech.cc.is.simulation.ObstacleInvisibleSim -2.047 -1.4396 0 1.0
 // from getting jumpy on slow machines, or when/if your process gets 
 // swapped out. 
 
-maxtimestep 40 
+maxtimestep 34 
 
 //====== 
 // TIMEOUT 
@@ -99,7 +99,7 @@ maxtimestep 40
 // is reached. If no timeout statement is given, the default is no 
 // termination. 
 // 
-timeout 303000 // ten seconds 
+timeout 30000 // ten seconds 
 
 //====== 
 // TIME 
@@ -131,7 +131,7 @@ logtime 0
 // 
 // logfilename filename (saved in logfiles directory) 
 // 
-logfilename "logfiles:log.xml" 
+logfilename "logfiles;log.xml" 
 
 //====== 
 // The ball 
@@ -157,44 +157,32 @@ xffffff x000000 3
 // numbers according to the order in which they are listed here. 
 //======WEST TEAM====== 
 westname WestTeam 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
 //------------your control system name goes here ^^^^^^^^ 
 -1.2 0 0 x3399ff x444444 1 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
 //------------your control system name goes here ^^^^^^^^ 
 -.5 0 0 x3399ff x444444 1 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
 //------------your control system name goes here ^^^^^^^^ 
 -.15 .5 0 x3399ff x444444 1 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
 //------------your control system name goes here ^^^^^^^^ 
 -.15 0 0 x3399ff x444444 1 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
 //------------your control system name goes here ^^^^^^^^ 
 -.15 -.5 0 x3399ff x444444 1 
 
 //======EAST TEAM====== 
 eastname EastTeam 
-<<<<<<< HEAD
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070802.TiquiTaca 
 1.2 0 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070802.TiquiTaca 
 .5 0 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070802.TiquiTaca 
 .15 .5 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070802.TiquiTaca 
 .15 0 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
-=======
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
-1.2 0 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
-.5 0 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
-.15 .5 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
-.15 0 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
->>>>>>> c3c2961169b57b0392ae817349a858949f3e5a87
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070802.TiquiTaca 
 .15 -.5 0 xff3333 xffff66 2 
 
