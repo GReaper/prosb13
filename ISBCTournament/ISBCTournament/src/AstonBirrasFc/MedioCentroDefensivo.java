@@ -26,7 +26,7 @@ public class MedioCentroDefensivo extends Behaviour
 			helper.evitarBloqueo(myRobotAPI.getClosestMate(), myRobotAPI);
 
 			// 2.- Increase speed
-			myRobotAPI.setSpeed(1000);
+			//myRobotAPI.setSpeed(1000);
 			
 			// Set displayed text
 			myRobotAPI.setDisplayString("MCD (AF)");

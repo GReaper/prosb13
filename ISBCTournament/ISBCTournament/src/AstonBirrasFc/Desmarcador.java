@@ -31,7 +31,7 @@ public class Desmarcador extends Behaviour
 			helper.evitaColision(myRobotAPI.getClosestMate(), myRobotAPI);
 
 			// 2.- Increase speed
-			myRobotAPI.setSpeed(1000);
+			//myRobotAPI.setSpeed(1000);
 			
 			// Set displayed text
 			myRobotAPI.setDisplayString("Desm. (AF)");
@@ -56,7 +56,7 @@ public class Desmarcador extends Behaviour
 				helper.evitaColision(closestOp, myRobotAPI);
 
 				// 2.- Increase speed
-				myRobotAPI.setSpeed(1000);
+				//myRobotAPI.setSpeed(1000);
 				
 				// Set displayed text
 				myRobotAPI.setDisplayString("Desm. (AO)");
@@ -108,7 +108,7 @@ public class Desmarcador extends Behaviour
 			helper.evitaColision(closestOp, myRobotAPI);
 
 			// 2.- Increase speed
-			myRobotAPI.setSpeed(1000);
+			//myRobotAPI.setSpeed(1000);
 
 			// Set displayed text
 			myRobotAPI.setDisplayString("Desm. (D)");

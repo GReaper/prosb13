@@ -34,7 +34,7 @@ public class BloqueaPortero extends Behaviour
 				helper.evitarBloqueo(myRobotAPI.getClosestMate(), myRobotAPI);
 	
 				// 2.- Increase speed
-				myRobotAPI.setSpeed(1000);
+				//myRobotAPI.setSpeed(1000);
 				
 				// Set displayed text
 				myRobotAPI.setDisplayString("BloqPort. (AF)");
@@ -54,7 +54,7 @@ public class BloqueaPortero extends Behaviour
 				helper.evitarBloqueo(closestOp, myRobotAPI);
 	
 				// 2.- Increase speed
-				myRobotAPI.setSpeed(1000);
+				//myRobotAPI.setSpeed(1000);
 				
 				// Set displayed text
 				myRobotAPI.setDisplayString("BloqPort. (AO2)");
@@ -76,7 +76,7 @@ public class BloqueaPortero extends Behaviour
 				helper.evitaColision(closestOp, myRobotAPI);
 	
 				// 2.- Increase speed
-				myRobotAPI.setSpeed(1000);
+				//myRobotAPI.setSpeed(1000);
 				
 				// Set displayed text
 				myRobotAPI.setDisplayString("BloqPort. (AO1)");

@@ -271,7 +271,7 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 		}		
 		//double angle = jugador.t + Math.PI;
 		myRobotAPI.setSteerHeading(angle);
-		myRobotAPI.setSpeed(1000);
+		myRobotAPI.setSpeed(1.0);
 	}
 
 	/**
@@ -283,15 +283,41 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 	public void evitarBloqueo(Vec2 jugador, RobotAPI myRobotAPI)
 	{
 		double angle = 0;
-		if (jugador.y <= 0)
+
+		// Si el angulo es el correcto, aumentar velocidad. Si no, detener y colocar
+		// angulo
+		if  (
+			(myRobotAPI.normalizeZero(myRobotAPI.getSteerHeading()) >=
+			myRobotAPI.normalizeZero(anguloDestino(jugador, myRobotAPI) + Math.PI))
+			||
+			(myRobotAPI.normalizeZero(myRobotAPI.getSteerHeading()) <=
+				myRobotAPI.normalizeZero(anguloDestino(jugador, myRobotAPI) - Math.PI))
+			)
 		{
-			angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) + Math.PI);
+			myRobotAPI.setSpeed(0);
+			if (jugador.y <= 0)
+			{
+				angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) + Math.PI);
+			}
+			else
+			{
+				angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) - Math.PI);
+			}	
+			myRobotAPI.setSteerHeading(angle);
 		}
 		else
 		{
-			angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) - Math.PI);
-		}	
-		myRobotAPI.setSteerHeading(angle);
+			if (jugador.y <= 0)
+			{
+				angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) + Math.PI);
+			}
+			else
+			{
+				angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) - Math.PI);
+			}	
+			myRobotAPI.setSteerHeading(angle);
+			myRobotAPI.setSpeed(1);			
+		}
 	}
 	
 	/**

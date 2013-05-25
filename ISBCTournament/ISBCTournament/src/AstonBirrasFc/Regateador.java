@@ -35,7 +35,7 @@ public class Regateador extends Behaviour
 				helper.evitarBloqueo(myRobotAPI.getClosestMate(), myRobotAPI);
 
 				// 2.- Increase speed
-				myRobotAPI.setSpeed(1000);
+				//myRobotAPI.setSpeed(1000);
 				
 				// Set displayed text
 				myRobotAPI.setDisplayString("Reg. (AF)");
@@ -56,7 +56,7 @@ public class Regateador extends Behaviour
 				helper.evitaColision(closestOp, myRobotAPI);
 
 				// 2.- Increase speed
-				myRobotAPI.setSpeed(1000);
+				//myRobotAPI.setSpeed(1000);
 				
 				// Set displayed text
 				myRobotAPI.setDisplayString("Reg. (AO)");
