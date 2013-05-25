@@ -80,11 +80,19 @@ public class Entrenador extends TeamManager
 		/* Vamos perdiendo */
 		else
 		{
-			/*_players[0].setBehaviour(_behaviours[7]);
-			_players[1].setBehaviour(_behaviours[5]);	
-			_players[2].setBehaviour(_behaviours[2]);
-			_players[3].setBehaviour(_behaviours[9]);
-			_players[4].setBehaviour(_behaviours[4]);*/			
+			// Cambiar portero por MC si es necesario
+			if (_players[0].getRobotAPI().opponentBlocking())
+			{
+				_players[0].setBehaviour(_behaviours[5]);
+				_players[1].setBehaviour(_behaviours[7]);				
+			}
+			// Comprobar cambios en el MC. El portero no está bloqueado y no es necesario
+			// cambiarlo.
+			else
+			{
+				_players[0].setBehaviour(_behaviours[7]);
+				_players[1].setBehaviour(_behaviours[5]);				
+			}		
 		}		
 	}
 	

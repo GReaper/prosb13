@@ -77,6 +77,24 @@ public class MedioCentroDefensivo extends Behaviour
 				// Return
 				return myRobotAPI.ROBOT_OK;
 			}
+			else
+			{
+				// Move following the ball
+
+				// 1.- Set steering
+				Vec2 dest = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
+				double angle = helper.anguloDestino(dest, myRobotAPI);			
+				myRobotAPI.setSteerHeading(angle);	
+				
+				// 2.- Increase speed
+				myRobotAPI.setSpeed(0.2);
+
+				// Set displayed text
+				myRobotAPI.setDisplayString("MCD (FB2)");
+				
+				// Return
+				return myRobotAPI.ROBOT_OK;
+			}
 		}
 		
 		// Decide the side to kick the ball
