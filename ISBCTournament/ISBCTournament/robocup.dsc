@@ -86,7 +86,7 @@ object EDU.gatech.cc.is.simulation.ObstacleInvisibleSim -2.047 -1.4396 0 1.0
 // from getting jumpy on slow machines, or when/if your process gets 
 // swapped out. 
 
-maxtimestep 4 
+maxtimestep 40 
 
 //====== 
 // TIMEOUT 
@@ -131,7 +131,7 @@ logtime 0
 // 
 // logfilename filename (saved in logfiles directory) 
 // 
-logfilename "logfiles;log.xml" 
+logfilename "logfiles:log.xml" 
 
 //====== 
 // The ball 
@@ -175,6 +175,7 @@ robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam
 
 //======EAST TEAM====== 
 eastname EastTeam 
+<<<<<<< HEAD
 robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
 1.2 0 0 xff3333 xffff66 2 
 robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
@@ -184,5 +185,16 @@ robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX
 robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
 .15 0 0 xff3333 xffff66 2 
 robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
+=======
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
+1.2 0 0 xff3333 xffff66 2 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
+.5 0 0 xff3333 xffff66 2 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
+.15 .5 0 xff3333 xffff66 2 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
+.15 0 0 xff3333 xffff66 2 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
+>>>>>>> c3c2961169b57b0392ae817349a858949f3e5a87
 .15 -.5 0 xff3333 xffff66 2 
 

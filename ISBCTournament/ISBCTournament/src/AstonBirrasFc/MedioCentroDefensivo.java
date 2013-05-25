@@ -19,10 +19,11 @@ public class MedioCentroDefensivo extends Behaviour
 		if (myRobotAPI.isBlocking(myRobotAPI.getClosestMate()))
 		{
 			// 1.- Set steering
-			Vec2 dest = myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestMate());
-			double angleAux = helper.anguloNecesario(dest, myRobotAPI, 0.01);
+			/*Vec2 dest = myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestMate());
+			double angleAux = helper.anguloDestino(dest, myRobotAPI);
 			double angle = helper.degToRad(helper.radToDeg(angleAux) + 180);
-			myRobotAPI.setSteerHeading(angle);	
+			myRobotAPI.setSteerHeading(angle);	*/
+			helper.evitarBloqueo(myRobotAPI.getClosestMate(), myRobotAPI);
 
 			// 2.- Increase speed
 			myRobotAPI.setSpeed(1000);
@@ -43,7 +44,7 @@ public class MedioCentroDefensivo extends Behaviour
 			{
 				// 1.- Set steering
 				Vec2 dest = myRobotAPI.getOurGoal();
-				double angle = helper.anguloNecesario(dest, myRobotAPI, 0.01);			
+				double angle = helper.anguloDestino(dest, myRobotAPI);			
 				myRobotAPI.setSteerHeading(angle);	
 				
 				// 2.- Increase speed
@@ -64,7 +65,7 @@ public class MedioCentroDefensivo extends Behaviour
 			{
 				// 1.- Set steering
 				Vec2 dest = myRobotAPI.getOurGoal();
-				double angle = helper.anguloNecesario(dest, myRobotAPI, 0.01);			
+				double angle = helper.anguloDestino(dest, myRobotAPI);			
 				myRobotAPI.setSteerHeading(angle);	
 				
 				// 2.- Increase speed
@@ -107,7 +108,7 @@ public class MedioCentroDefensivo extends Behaviour
 				// Kick to the lower middle side
 				dest = new Vec2(0, myRobotAPI.getLowerFieldBound());				
 			}*/
-			//double angle = helper.anguloNecesario(dest, myRobotAPI, 0.01);			
+			//double angle = helper.anguloDestino(dest, myRobotAPI);			
 			//myRobotAPI.setSteerHeading(angle);
 			myRobotAPI.setBehindBall(myRobotAPI.toEgocentricalCoordinates(dest));
 			myRobotAPI.kick();
@@ -134,7 +135,7 @@ public class MedioCentroDefensivo extends Behaviour
 			// Kick to the lower middle side
 			dest = new Vec2(0, myRobotAPI.getLowerFieldBound());				
 		}*/
-		//double angle = helper.anguloNecesario(dest, myRobotAPI, 0.01);			
+		//double angle = helper.anguloDestino(dest, myRobotAPI);			
 		//myRobotAPI.setSteerHeading(angle);
 		myRobotAPI.setBehindBall(myRobotAPI.toEgocentricalCoordinates(dest));
 		//myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());

@@ -98,6 +98,29 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 		
 	}
 	/**
+	 * Calcula cual es la mitad del campo en la X
+	 * @param myRobotAPI
+	 * @return
+	 */
+	public double miMitadX(RobotAPI myRobotAPI)
+	{
+		double derecha=RobotAPI.getRightFieldBound();
+		derecha*=0.5;
+		int equipo=myRobotAPI.getFieldSide();
+		
+			
+		if(equipo==RobotAPI.WEST_FIELD)
+		{
+			return -derecha;
+			
+		}
+		else
+		{
+			return derecha;			
+		}
+	}
+	
+	/**
 	 * Calcula cual es el cuarto del campo en la X
 	 * @param myRobotAPI
 	 * @return
@@ -105,24 +128,18 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 	public double miCuartoX(RobotAPI myRobotAPI)
 	{
 		double derecha=RobotAPI.getRightFieldBound();
-		derecha*=0.5;
+		derecha*=0.25;
 		int equipo=myRobotAPI.getFieldSide();
 		
-		Vec2 posicion= myRobotAPI.getPosition();
-		
+			
 		if(equipo==RobotAPI.WEST_FIELD)
 		{
-			if(-derecha> posicion.x)
-				return -derecha;
-			else
-				return posicion.x;
+			return -derecha;
+			
 		}
 		else
 		{
-			if(derecha< posicion.x)
-				return derecha;
-			else
-				return posicion.x;
+			return derecha;			
 		}
 	}
 	
@@ -167,7 +184,7 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 	 * 
 	 * @param destino en coordenadas globales
 	 * @param myRobotAPI
-	 * @return el �ngulo necesario
+	 * @return el �ngulo necesario
 	 */
 	public double anguloNecesario(Vec2 destino,RobotAPI myRobotAPI,double parada)
 	{		
@@ -189,5 +206,130 @@ public double irAPosicionParando(Vec2 destino,RobotAPI myRobotAPI,double parada)
 		
 		return resta.t;		
 	}
+	
+	/**
+	 * Determina si dos puntos están muy cerca. El factor de cercanía dependera, para mayor
+	 * precisión, del radio de jugador.
+	 * @param origen (coordenadas globales)
+	 * @param destino (coordenadas globales)
+	 * @param factor. Medida de margen para cercanía
+	 * @return booleano indicando si están cerca o no
+	 */
+	public boolean cercanoRadio(Vec2 origen, Vec2 destino, double factor)
+	{
+		// Buscar en circunferencia
+		return origen.x > destino.x-factor && 
+				origen.x < destino.x+factor &&
+				origen.y > destino.y-factor && 
+				origen.y < destino.y+factor;
+	}
+	
+	/**
+	 * Devuelve el angulo necesario para llegar a un punto
+	 * 
+	 * @param destino en coordenadas globales
+	 * @param myRobotAPI
+	 * @return el angulo necesario en radianes
+	 */
+	public double anguloDestino(Vec2 destino,RobotAPI myRobotAPI)
+	{		
+		//Vec2 myPos = myRobotAPI.getPosition();
+		/*Vec2 resta=(Vec2) destino.clone();
+		resta.sub(myPos);			
+		return resta.t;	*/
+		//double angle = /*(Math.toRadians(360) - myPos.t) +*/ Math.atan2(destino.y - myPos.y, destino.x - myPos.x);
+		//angle += Math.PI/2.0;
+		/*if(angle < 0)
+	    {
+	        angle += 360;
+	    }*/
 
+	    return myRobotAPI.normalizeZero(myRobotAPI.toEgocentricalCoordinates(destino).t);//angle;
+		//return myRobotAPI.toEgocentricalCoordinates(destino).t;//angle;
+	}
+
+	/**
+	 * Coloca el ángulo del jugador para evitar colisión con el jugador dado
+	 * 
+	 * @param jugador a evitar (coordenadas egocentricas)
+	 * @return 
+	 */
+	public void evitaColision(Vec2 jugador, RobotAPI myRobotAPI)
+	{
+		double angle = 0;
+		if (jugador.x <= 0)
+		{
+			angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) + 2*Math.PI);
+		}
+		else if (jugador.y <= 0)
+		{
+			angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) + Math.PI);
+		}
+		else
+		{
+			angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) - Math.PI);
+		}		
+		//double angle = jugador.t + Math.PI;
+		myRobotAPI.setSteerHeading(angle);
+	}
+
+	/**
+	 * Coloca el ángulo del jugador para salir del bloqueo con el jugador dado
+	 * 
+	 * @param jugador a evitar (coordenadas egocentricas)
+	 * @return 
+	 */
+	public void evitarBloqueo(Vec2 jugador, RobotAPI myRobotAPI)
+	{
+		double angle = 0;
+		if (jugador.y <= 0)
+		{
+			angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) + Math.PI);
+		}
+		else
+		{
+			angle = myRobotAPI.normalizeZero(myRobotAPI.normalizeZero(jugador.t) - Math.PI);
+		}	
+		myRobotAPI.setSteerHeading(angle);
+	}
+	
+	/**
+	 * Devuelve la posición del oponente más cercano a la portería
+	 * 
+	 * @param myRobotAPI
+	 * @return Vec2 con las coordenadas globales
+	 */
+	public Vec2 porteroEnemigo(RobotAPI myRobotAPI)
+	{		
+		// Tomar todos los enemigos (ego)
+		Vec2[] enms = myRobotAPI.getOpponents();
+		// Tomar portería enemiga (ego)
+		Vec2 port = myRobotAPI.getOpponentsGoal();
+
+		// Vec2 con candidato inicial
+		Vec2 cand = myRobotAPI.toFieldCoordinates(enms[0]);
+		double dist = distanciaEntre(cand, myRobotAPI.toFieldCoordinates(port));
+		for (int i=1;i < enms.length; i++)
+		{
+			if (distanciaEntre(myRobotAPI.toFieldCoordinates(enms[i]), myRobotAPI.toFieldCoordinates(port)) < dist)
+			{
+				cand = myRobotAPI.toFieldCoordinates(enms[i]);
+			}			
+		}
+		
+		return cand;		
+	}
+	
+	/**
+	 *  Calcula la distancia entre dos puntos
+	 *  
+	 *  @param origen
+	 *  @param destino
+	 *  @return distancia entre ambos
+	 * 
+	 */
+	public double distanciaEntre(Vec2 o, Vec2 d)
+	{
+		return Math.sqrt(Math.pow((d.x - o.x), 2) + Math.pow((d.y - o.y), 2));
+	}
 }
