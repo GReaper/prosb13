@@ -107,8 +107,7 @@ public class Entrenador extends TeamManager
 									_players[4].getRobotAPI().toFieldCoordinates(_players[4].getRobotAPI().getBall()), 
 									_players[4].getRobotAPI().getPlayerRadius()*3))
 			{
-				// TODO: cambiar por PEPE!!! Ahora mismo está en MCD
-				_players[2].setBehaviour(_behaviours[5]);
+				_players[2].setBehaviour(_behaviours[11]);
 				_players[3].setBehaviour(_behaviours[8]);
 				_players[4].setBehaviour(_behaviours[6]);
 				
@@ -120,8 +119,7 @@ public class Entrenador extends TeamManager
 						_players[3].getRobotAPI().toFieldCoordinates(_players[4].getRobotAPI().getBall()), 
 						_players[3].getRobotAPI().getPlayerRadius()*3))
 			{
-				// TODO: cambiar por PEPE!!! Ahora mismo está en MCD
-				_players[2].setBehaviour(_behaviours[5]);
+				_players[2].setBehaviour(_behaviours[11]);
 				_players[3].setBehaviour(_behaviours[6]);
 				_players[4].setBehaviour(_behaviours[8]);
 				
@@ -132,7 +130,7 @@ public class Entrenador extends TeamManager
 			{
 				// TODO: falta el jugador PEPE!
 				// Cambio a reboteador.
-				_players[2].setBehaviour(_behaviours[5]);
+				_players[2].setBehaviour(_behaviours[11]);
 				_players[3].setBehaviour(_behaviours[9]);
 				_players[4].setBehaviour(_behaviours[4]);
 			}
@@ -226,7 +224,8 @@ public class Entrenador extends TeamManager
 								new Portero(),				//7
 								new BloqueaPortero(),		//8
 								new Delantero(),			//9
-								new LocoBola()				//10
+								new LocoBola(),				//10
+								new Pepe()					//11
 							};
 		
 	}

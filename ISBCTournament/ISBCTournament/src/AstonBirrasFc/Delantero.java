@@ -6,7 +6,6 @@ import EDU.gatech.cc.is.util.Vec2;
 
 public class Delantero extends Behaviour
 {
-	private static int ATTACKSIDE;
 	private Ayudas ayuda;
 	
 	public void configure() 
@@ -18,42 +17,22 @@ public class Delantero extends Behaviour
 	{				
 		//Cojo posicion de la bola
 		Vec2 ball=myRobotAPI.getBall();
+		Vec2 ballCoordinates=myRobotAPI.toFieldCoordinates(ball);
 		int defenseside=myRobotAPI.getFieldSide();
-		ATTACKSIDE=(-1)*defenseside;
-		//Si esta bloqueado busca desbloquearse
-		if (myRobotAPI.isBlocking(myRobotAPI.getClosestMate()))
-		{
-			Vec2 dest = myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestMate());
-			double angleAux = ayuda.anguloNecesario(dest, myRobotAPI, 0.01);
-			double angle = ayuda.degToRad(ayuda.radToDeg(angleAux) + 180);
-			myRobotAPI.setSteerHeading(angle);	
+		int ataqueside=(-1)*defenseside;
+		ayuda.evitaColision(myRobotAPI.getClosestMate(), myRobotAPI);
 
-			myRobotAPI.setSpeed(1);
-			
-			myRobotAPI.setDisplayString("Evita bloqueo COM");
-		}
-		else
-		if(myRobotAPI.isBlocking(myRobotAPI.getClosestOpponent()))
-		{
-			Vec2 dest = myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestOpponent());
-			double angleAux = ayuda.anguloNecesario(dest, myRobotAPI, 0.01);
-			double angle = ayuda.degToRad(ayuda.radToDeg(angleAux) + 180);
-			myRobotAPI.setSteerHeading(angle);	
-
-			myRobotAPI.setSpeed(1);
-			
-			myRobotAPI.setDisplayString("Evita bloqueo OPP");
-		}
-		else
 		//Si la pelota esta en el lado donde se encuentra el delantero va a por la pelota
-		if( ball.x * ATTACKSIDE > 0)
+		if( (ballCoordinates.x >= 0 && ataqueside==myRobotAPI.EAST_FIELD) || (ballCoordinates.x <= 0 && ataqueside==myRobotAPI.WEST_FIELD))
 		{
-			myRobotAPI.setBehindBall(ball);
-			myRobotAPI.setDisplayString("Busca tiro o pase");
+			
+			myRobotAPI.setDisplayString("PK");
 			//Si puede golpearla, la golpea
 			//Sino prueba a pasarla
-			if(myRobotAPI.canKick())
+			if(ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getOpponentsGoal()), myRobotAPI, 0.15))
 			{
+				myRobotAPI.setBehindBall(ball);
+				
 				Vec2 goal = myRobotAPI.toFieldCoordinates(myRobotAPI.getOpponentsGoal());
 				double angleAux = ayuda.anguloNecesario(goal, myRobotAPI, 0.01);
 				double angle = ayuda.degToRad(ayuda.radToDeg(angleAux) + 180);
@@ -62,7 +41,8 @@ public class Delantero extends Behaviour
 				{
 					myRobotAPI.setDisplayString("Tiro");
 					myRobotAPI.kick();					
-				}					
+				}	
+				
 				
 			}
 			else
@@ -86,10 +66,36 @@ public class Delantero extends Behaviour
 				
 				myRobotAPI.passBall(myRobotAPI.toFieldCoordinates(teammates[cercano]));
 				myRobotAPI.setDisplayString("Pasa balon");
+				return myRobotAPI.ROBOT_OK;
 			}
 		}
 		else
 		{
+			//Se queda en el medio esperando a que pase la bola
+			//Me quedo en el cuarto de campo esperando a algun contrario
+			//Evita bloquearse con compañeros
+			ayuda.evitaColision(myRobotAPI.getClosestMate(), myRobotAPI);
+			ayuda.evitaColision(myRobotAPI.getClosestOpponent(), myRobotAPI);
+			
+			//Debe esperar en el medio del campo
+			Double thirdSize = (myRobotAPI.getRightFieldBound() - myRobotAPI.getLeftFieldBound()) / 3;
+			// Check if the player is in the first third of the field
+			if (!(myRobotAPI.getPosition().x * myRobotAPI.getFieldSide() >= thirdSize))
+			{
+				// 1.- Set steering
+				Vec2 dest = myRobotAPI.getOpponentsGoal();
+				double angle = ayuda.anguloDestino(dest, myRobotAPI);			
+				myRobotAPI.setSteerHeading(angle);	
+				
+				// 2.- Increase speed
+				myRobotAPI.setSpeed(1000);
+
+				// Set displayed text
+				myRobotAPI.setDisplayString("Del. (Wait)");
+				
+				// Return
+				return myRobotAPI.ROBOT_OK;
+			}
 			
 		}
 		return myRobotAPI.ROBOT_OK;

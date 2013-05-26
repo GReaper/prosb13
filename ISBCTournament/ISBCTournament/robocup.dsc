@@ -86,7 +86,7 @@ object EDU.gatech.cc.is.simulation.ObstacleInvisibleSim -2.047 -1.4396 0 1.0
 // from getting jumpy on slow machines, or when/if your process gets 
 // swapped out. 
 
-maxtimestep 29 
+maxtimestep 27 
 
 //====== 
 // TIMEOUT 
@@ -99,7 +99,7 @@ maxtimestep 29
 // is reached. If no timeout statement is given, the default is no 
 // termination. 
 // 
-timeout 30000 // ten seconds 
+timeout 60000 // ten seconds 
 
 //====== 
 // TIME 
@@ -175,14 +175,14 @@ robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX
 
 //======EAST TEAM====== 
 eastname EastTeam 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070802.TiquiTaca 
 1.2 0 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070802.TiquiTaca 
 .5 0 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070802.TiquiTaca 
 .15 .5 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070802.TiquiTaca 
 .15 0 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim isbcteam.rolebased.DummyTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070802.TiquiTaca 
 .15 -.5 0 xff3333 xffff66 2 
 

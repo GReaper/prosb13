@@ -25,6 +25,7 @@ public class Portero extends Behaviour
 		{
 			myRobotAPI.setBehindBall(ball);
 			myRobotAPI.kick();
+			myRobotAPI.setDisplayString("Portero (kick)");
 		}
 		else
 		//Si esta fuera del area de gol vuelve
@@ -33,6 +34,7 @@ public class Portero extends Behaviour
 		{
 			myRobotAPI.setSteerHeading(ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(ourgoal), myRobotAPI,0.0001));
 			myRobotAPI.setSpeed(1.0);
+			myRobotAPI.setDisplayString("Portero (area)");
 		}
 		else
 		{
@@ -52,6 +54,7 @@ public class Portero extends Behaviour
 				myRobotAPI.setSpeed(0);
 			else
 				myRobotAPI.setSpeed(1.0);
+			myRobotAPI.setDisplayString("Portero (wait)");
 				
 		}
 		return myRobotAPI.ROBOT_OK;
