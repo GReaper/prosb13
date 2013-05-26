@@ -236,6 +236,8 @@ public class Entrenador extends TeamManager
 		int maximoPortero=3;
 		int maximoDefensa=4;
 		
+		//TODO mejorarlo para que meta el mas cercano a la porteria
+		
 		if (estaBloqueado(quienPortero))
 		{
 			int aux=0;
@@ -249,7 +251,7 @@ public class Entrenador extends TeamManager
 			}
 			if(!parar)
 			{
-				quienPortero=1;
+				quienPortero=0;
 			}
 			
 			quienPortero=aux;
