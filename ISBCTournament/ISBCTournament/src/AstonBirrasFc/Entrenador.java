@@ -1,5 +1,8 @@
 package AstonBirrasFc;
 
+import java.util.SortedMap;
+
+import EDU.gatech.cc.is.util.Vec2;
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
 import teams.ucmTeam.TeamManager;
@@ -8,6 +11,13 @@ public class Entrenador extends TeamManager
 {
 	private RobotAPI myRobotAPI;
 	private Ayudas helper;
+	int quienPortero=0;
+	int quienDefensa=1;
+	int jugador3=3;
+	int jugador4=4;
+	int jugador5=5;
+	
+	boolean jugadaAtaque=false;
 	
 	public int onConfigure() 
 	{
@@ -20,20 +30,48 @@ public class Entrenador extends TeamManager
 		/*
 		 * 0 - Portero <-> MC
 		 * 1 - MCD <-> MCO <-> Portero
-		 * 2 - MCO <-> Pepe <-> Reboteador
+		 * 2 - MCO <-> Pepe <-> Reboteador<-> portero
 		 * 3 - Delantero <-> Desmarcador <-> Regateador <-> BloqueoPortero
 		 * 4 - Delantero <-> Desmarcador <-> Regateador <-> BloqueoPortero
 		 */
-		myRobotAPI = _players[0].getRobotAPI();
+		myRobotAPI = _players[quienPortero].getRobotAPI();
+		if(myRobotAPI.getJustScored()==1)
+		{//acabamos de marcar
+			quienPortero=0;
+			quienDefensa=1;
+			jugador3=2;
+			jugador4=3;
+			jugador5=4;
+			_players[quienPortero].setBehaviour(_behaviours[7]);
+			_players[quienDefensa].setBehaviour(_behaviours[5]);//MCD
+			_players[jugador3].setBehaviour(_behaviours[5]);//MCD
+			_players[jugador4].setBehaviour(_behaviours[11]);//delantero
+			_players[jugador5].setBehaviour(_behaviours[4]);//rebote
+			
+		}
+		if(myRobotAPI.getJustScored()==-1)
+		{//nos acaban de marcar
+			quienPortero=0;
+			quienDefensa=1;
+			jugador3=2;
+			jugador4=3;
+			jugador5=4;
+			_players[quienPortero].setBehaviour(_behaviours[7]);
+			_players[quienDefensa].setBehaviour(_behaviours[5]);
+			_players[jugador3].setBehaviour(_behaviours[11]);//delantero
+			_players[jugador4].setBehaviour(_behaviours[11]);//delantero
+			_players[jugador5].setBehaviour(_behaviours[4]);//rebote
+		}
 		
-		/* Vamos empatados
-		 *  
-		 *  Comportamiento normal
-		 */
+		/*
+		// Vamos empatados
+		//  
+		//  Comportamiento normal
+		//
 		if (myRobotAPI.getMyScore() == myRobotAPI.getOpponentScore())
 		{
 			// Cambiar portero por MC si es necesario
-			if (_players[0].getRobotAPI().opponentBlocking())
+			if (_players[0].getRobotAPI().opponentBlocking() || _players[0].getRobotAPI().teammateBlocking())
 			{
 				_players[0].setBehaviour(_behaviours[5]);
 				_players[1].setBehaviour(_behaviours[7]);				
@@ -80,10 +118,10 @@ public class Entrenador extends TeamManager
 			}
 		}
 		
-		/* Vamos ganando 
-		 *  
-		 *  Agregamos un pepe o bloqueador atrás para defender más
-		 */
+		// Vamos ganando 
+		//  
+		//  Agregamos un pepe o bloqueador atrás para defender más
+		//
 		else if (myRobotAPI.getMyScore() > myRobotAPI.getOpponentScore())
 		{
 			// Cambiar portero por MC si es necesario
@@ -136,10 +174,10 @@ public class Entrenador extends TeamManager
 			}
 		}
 		
-		/* Vamos perdiendo 
-		 *  
-		 *  
-		 */
+		// Vamos perdiendo 
+		//  
+		//  
+		//
 		else
 		{
 			// Cambiar portero por MC si es necesario
@@ -188,7 +226,282 @@ public class Entrenador extends TeamManager
 				_players[3].setBehaviour(_behaviours[9]);
 				_players[4].setBehaviour(_behaviours[4]);
 			}
-		}		
+		}	
+		*/
+		
+		//siempre debera haber un portero
+		//si el portero esta bloqueado, miramos quien sera el portero
+		boolean cambioPortero=false;
+		boolean cambioDefensa=true;
+		int maximoPortero=3;
+		int maximoDefensa=4;
+		
+		if (estaBloqueado(quienPortero))
+		{
+			int aux=0;
+			boolean parar=false;
+			while(aux<maximoPortero && !parar)
+			{
+				if(estaBloqueado(aux))
+					aux++;
+				else
+					parar=true;
+			}
+			if(!parar)
+			{
+				quienPortero=1;
+			}
+			
+			quienPortero=aux;
+			_players[quienPortero].setBehaviour(_behaviours[7]);
+			cambioPortero=true;
+			
+		}
+		
+		//siempre debera haber un MCD
+		if (estaBloqueado(quienDefensa))
+		{
+			int aux=1;
+			boolean parar=false;
+			while(aux<maximoDefensa && !parar)
+			{
+				if(estaBloqueado(aux) || aux==quienPortero)
+					aux++;
+				else
+					parar=true;
+			}
+			if(!parar)
+			{
+				quienDefensa=1;
+			}
+			
+			quienDefensa=aux;
+			_players[quienDefensa].setBehaviour(_behaviours[5]);
+			cambioDefensa=true;
+			
+		}
+		
+		//si hay un cambio de defensa o portero, resasignamos los jugadores
+		//con su valor correspondiente para cada estado
+		
+		//con la defensa siempre ajustada, deberemos mirar el resto de los jugadores para que 
+		//ataquen o defiendan en funcion de como esta el resultado
+		//la pelota y si estan bloqueados
+		if (myRobotAPI.getMyScore() == myRobotAPI.getOpponentScore())
+		{
+			//3->MCO
+			//4->Delantero
+			//5->Desmarque
+			if(cambioPortero || cambioDefensa)
+			{
+				int nAsignados=0;
+				
+				for(int i=0;i<5;i++)
+				{
+					if(i!= quienPortero && i!= quienDefensa)
+					{
+						switch(nAsignados)
+						{
+						case 0:jugador3=i;break;
+						case 1:jugador4=i;break;
+						case 2:jugador5=i;break;
+						}
+						
+						nAsignados++;
+					}
+				}
+				_players[jugador3].setBehaviour(_behaviours[2]);//MCO
+				_players[jugador4].setBehaviour(_behaviours[9]);//delantero
+				_players[jugador5].setBehaviour(_behaviours[4]);//dsesmarque
+				jugadaAtaque=false;
+				
+				
+			}
+			
+			//no estamos en jugada de ataque y el jugador 5 esta muy cerca de la bola
+			//jugador4-> bloqueo
+			//jugador5->regate
+			if(!jugadaAtaque && helper.cercanoRadio(_players[jugador5].getRobotAPI().getPosition(), 
+					_players[jugador5].getRobotAPI().toFieldCoordinates(_players[jugador5].getRobotAPI().getBall()), 
+					_players[jugador5].getRobotAPI().getPlayerRadius()*3))
+			{
+				jugadaAtaque=true;
+				_players[jugador5].setBehaviour(_behaviours[6]);//regate
+				_players[jugador4].setBehaviour(_behaviours[8]);//bloqueo
+			}
+			else
+			{	//miramos la jugada contraria
+				//jugador5-> bloqueo
+				//jugador4->regate	
+				if(!jugadaAtaque && helper.cercanoRadio(_players[jugador4].getRobotAPI().getPosition(), 
+						_players[jugador4].getRobotAPI().toFieldCoordinates(_players[jugador4].getRobotAPI().getBall()), 
+						_players[jugador4].getRobotAPI().getPlayerRadius()*3))
+				{
+					jugadaAtaque=true;
+					_players[jugador4].setBehaviour(_behaviours[6]);//regate
+					_players[jugador5].setBehaviour(_behaviours[8]);//bloqueo
+				}
+				else
+				{	//miramos si es el jugador 3 el que esta cerca 
+					if(!jugadaAtaque && helper.cercanoRadio(_players[jugador3].getRobotAPI().getPosition(), 
+							_players[jugador3].getRobotAPI().toFieldCoordinates(_players[jugador3].getRobotAPI().getBall()), 
+							_players[jugador3].getRobotAPI().getPlayerRadius()*3))
+					{
+						jugadaAtaque=true;
+						_players[jugador3].setBehaviour(_behaviours[6]);//regate
+						_players[jugador4].setBehaviour(_behaviours[2]);//regate
+						_players[jugador5].setBehaviour(_behaviours[8]);//bloqueo
+					}
+					else
+					{
+						if(jugadaAtaque)
+						{
+							//ninguno esta cercano reiniciamos
+							_players[jugador3].setBehaviour(_behaviours[2]);//MCO
+							_players[jugador4].setBehaviour(_behaviours[9]);//delantero
+							_players[jugador5].setBehaviour(_behaviours[4]);//dsesmarque
+						}
+						jugadaAtaque=false;
+					}
+					
+				}
+				
+			}
+			
+		}
+		else
+		{
+			if (myRobotAPI.getMyScore() < myRobotAPI.getOpponentScore())
+			{//perdemos
+				if(cambioPortero || cambioDefensa)
+				{
+					int nAsignados=0;
+					
+					for(int i=0;i<5;i++)
+					{
+						if(i!= quienPortero && i!= quienDefensa)
+						{
+							switch(nAsignados)
+							{
+							case 0:jugador3=i;break;
+							case 1:jugador4=i;break;
+							case 2:jugador5=i;break;
+							}
+							
+							nAsignados++;
+						}
+					}
+					_players[jugador3].setBehaviour(_behaviours[10]);//locobola
+					_players[jugador4].setBehaviour(_behaviours[9]);//delantero
+					_players[jugador5].setBehaviour(_behaviours[4]);//desmarque					
+					
+				}
+				//no estamos en jugada de ataque y el jugador 5 esta muy cerca de la bola
+				//jugador4-> bloqueo
+				//jugador5->regate
+				if(!jugadaAtaque && helper.cercanoRadio(_players[jugador5].getRobotAPI().getPosition(), 
+						_players[jugador5].getRobotAPI().toFieldCoordinates(_players[jugador5].getRobotAPI().getBall()), 
+						_players[jugador5].getRobotAPI().getPlayerRadius()*3))
+				{
+					jugadaAtaque=true;
+					_players[jugador5].setBehaviour(_behaviours[6]);//regate
+					_players[jugador4].setBehaviour(_behaviours[8]);//bloqueo
+				}
+				else
+				{	//miramos la jugada contraria
+					//jugador5-> bloqueo
+					//jugador4->regate	
+					if(!jugadaAtaque && helper.cercanoRadio(_players[jugador4].getRobotAPI().getPosition(), 
+							_players[jugador4].getRobotAPI().toFieldCoordinates(_players[jugador4].getRobotAPI().getBall()), 
+							_players[jugador4].getRobotAPI().getPlayerRadius()*3))
+					{
+						jugadaAtaque=true;
+						_players[jugador4].setBehaviour(_behaviours[6]);//regate
+						_players[jugador5].setBehaviour(_behaviours[8]);//bloqueo
+					}
+					else
+					{
+						if(jugadaAtaque)
+						{
+							//ninguno esta cercano reiniciamos
+							_players[jugador3].setBehaviour(_behaviours[10]);//MCO
+							_players[jugador4].setBehaviour(_behaviours[9]);//delantero
+							_players[jugador5].setBehaviour(_behaviours[4]);//dsesmarque
+						}
+						jugadaAtaque=false;
+						
+					}
+					
+				}
+			}
+			else
+			{//ganamos
+				if(cambioPortero || cambioDefensa)
+				{
+					int nAsignados=0;
+					
+					for(int i=0;i<5;i++)
+					{
+						if(i!= quienPortero && i!= quienDefensa)
+						{
+							switch(nAsignados)
+							{
+							case 0:jugador3=i;break;
+							case 1:jugador4=i;break;
+							case 2:jugador5=i;break;
+							}
+							
+							nAsignados++;
+						}
+					}
+					_players[jugador3].setBehaviour(_behaviours[11]);//pepe
+					_players[jugador4].setBehaviour(_behaviours[2]);//MCO
+					_players[jugador5].setBehaviour(_behaviours[4]);//desmarque
+					
+					
+				}
+				//no estamos en jugada de ataque y el jugador 5 esta muy cerca de la bola
+				//jugador4-> bloqueo
+				//jugador5->regate
+				if(!jugadaAtaque && helper.cercanoRadio(_players[jugador5].getRobotAPI().getPosition(), 
+						_players[jugador5].getRobotAPI().toFieldCoordinates(_players[jugador5].getRobotAPI().getBall()), 
+						_players[jugador5].getRobotAPI().getPlayerRadius()*3))
+				{
+					jugadaAtaque=true;
+					_players[jugador5].setBehaviour(_behaviours[6]);//regate
+					_players[jugador4].setBehaviour(_behaviours[8]);//bloqueo
+				}
+				else
+				{	//miramos la jugada contraria
+					//jugador5-> bloqueo
+					//jugador4->regate	
+					if(!jugadaAtaque && helper.cercanoRadio(_players[jugador4].getRobotAPI().getPosition(), 
+							_players[jugador4].getRobotAPI().toFieldCoordinates(_players[jugador4].getRobotAPI().getBall()), 
+							_players[jugador4].getRobotAPI().getPlayerRadius()*3))
+					{
+						jugadaAtaque=true;
+						_players[jugador4].setBehaviour(_behaviours[6]);//regate
+						_players[jugador5].setBehaviour(_behaviours[8]);//bloqueo
+					}
+					else
+					{
+						if(jugadaAtaque)
+						{
+							//ninguno esta cercano reiniciamos
+							_players[jugador3].setBehaviour(_behaviours[11]);//MCO
+							_players[jugador4].setBehaviour(_behaviours[2]);//delantero
+							_players[jugador5].setBehaviour(_behaviours[4]);//dsesmarque
+						}
+						jugadaAtaque=false;
+						
+					}
+					
+				}
+			}
+		}
+		
+
+		
 	}
 	
 	public Behaviour getDefaultBehaviour(int id) 
@@ -216,9 +529,9 @@ public class Entrenador extends TeamManager
 		return new Behaviour[] {
 								new GoToBall(),			 	//0
 								new QuietoParao(),			//1
-								new MedioCentroAtacante(),	//2
-								new Rebote(),				//3
-								new Desmarcador(),			//4
+								new MedioCentroAtacante(),	//2												
+								new Desmarcador(),			//3
+								new Rebote(),				//4
 								new MedioCentroDefensivo(),	//5
 								new Regateador(),			//6
 								new Portero(),				//7
@@ -226,7 +539,14 @@ public class Entrenador extends TeamManager
 								new Delantero(),			//9
 								new LocoBola(),				//10
 								new Pepe()					//11
+							
 							};
 		
+	}
+	
+	public boolean estaBloqueado(int numero)
+	{
+		return _players[numero].getRobotAPI().opponentBlocking();
+		//||	_players[numero].getRobotAPI().teammateBlocking();
 	}
 }
