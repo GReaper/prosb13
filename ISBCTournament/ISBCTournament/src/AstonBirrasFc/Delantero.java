@@ -20,32 +20,43 @@ public class Delantero extends Behaviour
 		Vec2 ballCoordinates=myRobotAPI.toFieldCoordinates(ball);
 		int defenseside=myRobotAPI.getFieldSide();
 		int ataqueside=(-1)*defenseside;
-		ayuda.evitaColision(myRobotAPI.getClosestMate(), myRobotAPI);
+		//ayuda.evitaColision(myRobotAPI.getClosestMate(), myRobotAPI);
 
 		//Si la pelota esta en el lado donde se encuentra el delantero va a por la pelota
 		if( (ballCoordinates.x >= 0 && ataqueside==myRobotAPI.EAST_FIELD) || (ballCoordinates.x <= 0 && ataqueside==myRobotAPI.WEST_FIELD))
 		{
-			
-			myRobotAPI.setDisplayString("PK");
+			myRobotAPI.setDisplayString("Del. (PK)");
 			//Si puede golpearla, la golpea
 			//Sino prueba a pasarla
-			if(ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getOpponentsGoal()), myRobotAPI, 0.15))
+			if(ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getOpponentsGoal()), myRobotAPI, 0.25)
+					&& myRobotAPI.canKick() /*&& myRobotAPI.alignedToBallandGoal()*/
+					&& !ayuda.cercanoRadio(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestOpponent()), myRobotAPI.getPlayerRadius()*2))
 			{
-				myRobotAPI.setBehindBall(ball);
+				//myRobotAPI.setBehindBall(ball);
+				//myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 				
-				Vec2 goal = myRobotAPI.toFieldCoordinates(myRobotAPI.getOpponentsGoal());
-				double angleAux = ayuda.anguloNecesario(goal, myRobotAPI, 0.01);
-				double angle = ayuda.degToRad(ayuda.radToDeg(angleAux) + 180);
-				myRobotAPI.setSteerHeading(angle);
-				if(myRobotAPI.alignedToBallandGoal())
-				{
-					myRobotAPI.setDisplayString("Tiro");
+				//Vec2 goal = myRobotAPI.toFieldCoordinates(myRobotAPI.getOpponentsGoal());
+				//double angleAux = ayuda.anguloNecesario(goal, myRobotAPI, 0.01);
+				//double angle = ayuda.degToRad(ayuda.radToDeg(angleAux) + 180);
+				//myRobotAPI.setSteerHeading(angle);
+				
+				//if(myRobotAPI.alignedToBallandGoal())
+				//{
+					myRobotAPI.setDisplayString("Del. (Tiro)");
 					myRobotAPI.kick();					
-				}	
+				//}	
 				
-				
+				return myRobotAPI.ROBOT_OK;
 			}
-			else
+			
+			if (!ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getOpponentsGoal()), myRobotAPI, 0.25))
+			{
+				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+				return myRobotAPI.ROBOT_OK;
+			}
+			
+			if (ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getOpponentsGoal()), myRobotAPI, 0.25)
+					&& ayuda.cercanoRadio(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestOpponent()), myRobotAPI.getPlayerRadius()*2))
 			{
 				//Recorre donde estan todos sus compañeros y se la pasa al mas cercano
 				//que este en la zona de ataque
@@ -67,6 +78,11 @@ public class Delantero extends Behaviour
 				myRobotAPI.passBall(myRobotAPI.toFieldCoordinates(teammates[cercano]));
 				myRobotAPI.setDisplayString("Pasa balon");
 				return myRobotAPI.ROBOT_OK;
+			}
+			else
+			{
+				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+				return myRobotAPI.ROBOT_OK;				
 			}
 		}
 		else
