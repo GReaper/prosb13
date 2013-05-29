@@ -157,19 +157,19 @@ xffffff x000000 3
 // numbers according to the order in which they are listed here. 
 //======WEST TEAM====== 
 westname WestTeam 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070810.VamosEquipo 
 //------------your control system name goes here ^^^^^^^^ 
 -1.2 0 0 x3399ff x444444 1 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070810.VamosEquipo 
 //------------your control system name goes here ^^^^^^^^ 
 -.5 0 0 x3399ff x444444 1 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070810.VamosEquipo 
 //------------your control system name goes here ^^^^^^^^ 
 -.15 .5 0 x3399ff x444444 1 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070810.VamosEquipo 
 //------------your control system name goes here ^^^^^^^^ 
 -.15 0 0 x3399ff x444444 1 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim AstonBirrasFc.ADRVX 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070810.VamosEquipo 
 //------------your control system name goes here ^^^^^^^^ 
 -.15 -.5 0 x3399ff x444444 1 
 
