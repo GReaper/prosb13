@@ -52,6 +52,13 @@ public class MedioCentroAtacante extends Behaviour
 		Vec2 destino;
 		Vec2[] oponentes;
 		Vec2 porteria;
+		
+		
+		if(myRobotAPI.opponentBlocking())
+		{
+			ayuda.evitarBloqueo(myRobotAPI.getClosestOpponent(), myRobotAPI);
+		}
+		else
 		switch(estado)
 		{
 		default:
