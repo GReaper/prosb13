@@ -16,15 +16,14 @@ public class Portero extends Behaviour
 	public int takeStep() 
 	{				
 		//Cojo posicion de la bola
-		myRobotAPI.setDisplayString("Mierda");
 		Vec2 ball=myRobotAPI.getBall();
 		//Cojo donde esta mi porteria
 		Vec2 ourgoal=myRobotAPI.getOurGoal();
 		Vec2[] teammates=myRobotAPI.getTeammates();
 		Vec2[] opponents=myRobotAPI.getOpponents();
 		SIDE=myRobotAPI.getFieldSide();
-		
-		if(!ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(ourgoal), myRobotAPI, 0.10))
+		double distancia=ayuda.distanciaEntre(myRobotAPI.getPosition(),myRobotAPI.toFieldCoordinates(ourgoal));
+		if(distancia > 0.18)
 		{ //Si no esta cerca de la porteria(factor del 15%) evita a contrarios y a compañeros
 			
 			
@@ -43,7 +42,7 @@ public class Portero extends Behaviour
 			}
 			
 			//Evita colision compañeros
-			for(int i =0;i<teammates.length;i++)
+			for(int i =0;i<teammates.length;i++) 
 			{
 				if(ayuda.cercanoRadio(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(teammates[i]),0.2))
 				{
@@ -59,14 +58,15 @@ public class Portero extends Behaviour
 					ayuda.evitaColision(myRobotAPI.toFieldCoordinates(opponents[i]), myRobotAPI);
 					myRobotAPI.setDisplayString("Portero (ECO)");
 				}
-			}
+			}	
+			myRobotAPI.setDisplayString("Portero (Out)");
 		}
 		else
 		//Si la pelota esta detras del portero intenta ir a por ella y golpearla hacia fuera
 		if( ball.x * SIDE > 0)
 		{
 			// Decide hacia que lado golpear el balon
-			Vec2 dest = myRobotAPI.getOpponentsGoal();
+			Vec2 dest = myRobotAPI.getOpponentsGoal(); 
 			// decide donde golpea la bola
 			if (myRobotAPI.getPosition().y > 0)
 			{
