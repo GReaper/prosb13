@@ -23,14 +23,32 @@ public class Portero extends Behaviour
 		//Si la pelota esta detras del portero intenta ir a por ella y golpearla hacia fuera
 		if( ball.x * SIDE > 0)
 		{
-			myRobotAPI.setBehindBall(ball);
-			myRobotAPI.kick();
-			myRobotAPI.setDisplayString("Portero (kick)");
+			// Decide hacia que lado golpear el balon
+			Vec2 dest = myRobotAPI.getOpponentsGoal();
+			// decide donde golpea la bola
+			if (myRobotAPI.getPosition().y > 0)
+			{
+				// Golpea a la parte superior
+				dest = new Vec2(0, myRobotAPI.getUpperFieldBound());
+			}
+			else
+			{
+				// Golpea a la parte inferior
+				dest = new Vec2(0, myRobotAPI.getLowerFieldBound());				
+			}
+			
+			// Comprueba si puede golpear la bola
+			if (myRobotAPI.canKick())
+			{
+				myRobotAPI.setBehindBall(myRobotAPI.toEgocentricalCoordinates(dest));
+				myRobotAPI.kick();
+				myRobotAPI.setDisplayString("Portero (kick)");
+			}
 		}
 		else
 		//Si esta fuera del area de gol vuelve
-		if( (Math.abs(ourgoal.x) > myRobotAPI.getPlayerRadius() * 1.4) ||
-				 (Math.abs(ourgoal.y) > myRobotAPI.getPlayerRadius() * 4.25) )
+		if( (Math.abs(ourgoal.x) > myRobotAPI.getPlayerRadius() * 1.5) ||
+				 (Math.abs(ourgoal.y) > myRobotAPI.getPlayerRadius() * 2.9) )
 		{
 			myRobotAPI.setSteerHeading(ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(ourgoal), myRobotAPI,0.0001));
 			myRobotAPI.setSpeed(1.0);
@@ -41,12 +59,12 @@ public class Portero extends Behaviour
 			//Para que este entre el balon y la porteria
 			if( ball.y > 0)
 			{
-				Vec2 move=new Vec2((double)SIDE, 7);
+				Vec2 move=new Vec2((double)SIDE, 6);
 				myRobotAPI.setSteerHeading(ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(move), myRobotAPI,0.0001));
 			}
 			else
 			{
-				Vec2 move=new Vec2((double)SIDE, -7);
+				Vec2 move=new Vec2((double)SIDE, -6);
 				myRobotAPI.setSteerHeading(ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(move), myRobotAPI,0.0001));
 			}
 
