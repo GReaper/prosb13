@@ -36,11 +36,11 @@ public class Vec2Ordered implements Comparable<Vec2Ordered>
 		
 		if(field==1)
 		{//derecha
-			if(otro.x> posicion.x)
+			if(otro.x< posicion.x)
 			{
 				return -1;
 			}
-			if(otro.x< posicion.x)
+			if(otro.x> posicion.x)
 			{
 				return 1;
 			}
@@ -49,11 +49,11 @@ public class Vec2Ordered implements Comparable<Vec2Ordered>
 		else
 		{//izquierda
 			
-			if(otro.x< posicion.x)
+			if(otro.x> posicion.x)
 			{
 				return -1;
 			}
-			if(otro.x> posicion.x)
+			if(otro.x< posicion.x)
 			{
 				return 1;
 			}

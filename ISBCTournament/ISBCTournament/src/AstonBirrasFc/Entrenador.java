@@ -77,11 +77,6 @@ public class Entrenador extends TeamManager
 		}
 		
 		//siempre debera haber un portero
-		//si el portero esta bloqueado, miramos quien sera el portero
-		boolean cambioPortero=false;
-		boolean cambioDefensa=true;
-		int maximoPortero=3;
-		int maximoDefensa=4;
 		
 		//creamos la lista ordenada
 		List<Vec2Ordered> listaOrdenada= new ArrayList<Vec2Ordered>();
@@ -103,7 +98,12 @@ public class Entrenador extends TeamManager
 		Collections.sort(listaOrdenada);
 		/**/
 		
-		
+		//si el portero esta bloqueado, miramos quien sera el portero
+				boolean cambioPortero=false;
+				boolean cambioDefensa=true;
+				int maximoPortero=5;
+				int maximoDefensa=5;
+				
 		if (estaBloqueadoPortero(quienPortero))
 		{
 			int aux=0;
@@ -133,13 +133,14 @@ public class Entrenador extends TeamManager
 		}
 		
 		//siempre debera haber un MCD
-		if (estaBloqueado(quienDefensa) && false)
+		//if (estaBloqueado(quienDefensa) && false)
+		if(cambioPortero)//buscamos un defensa
 		{
 			int aux=0;
 			boolean parar=false;
 			while(aux<maximoDefensa && !parar)
 			{
-				if(estaBloqueado2(aux,listaOrdenada) || aux==quienPortero)
+				if(estaBloqueado2(aux,listaOrdenada) || listaOrdenada.get(aux).getId()==quienPortero)
 					aux++;
 				else
 					parar=true;
@@ -150,7 +151,7 @@ public class Entrenador extends TeamManager
 			}
 			defensaPrevio=quienDefensa;
 			
-			quienDefensa=listaOrdenada.get(aux).getId();;
+			quienDefensa=listaOrdenada.get(aux).getId();
 			_players[quienDefensa].setBehaviour(_behaviours[5]);
 			cambioDefensa=true;
 			
