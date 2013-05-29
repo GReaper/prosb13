@@ -133,8 +133,6 @@ public class Entrenador extends TeamManager
 		}
 		
 		//siempre debera haber un MCD
-		//if (estaBloqueado(quienDefensa) && false)
-		if(cambioPortero)//buscamos un defensa
 		{
 			int aux=0;
 			boolean parar=false;
