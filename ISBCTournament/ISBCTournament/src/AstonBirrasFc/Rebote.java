@@ -181,7 +181,7 @@ public class Rebote extends Behaviour
 	{
 		double angulo;
 		Vec2 myPos;
-		myRobotAPI.setDisplayString(estado.toString());
+		myRobotAPI.setDisplayString("Rebote"+estado.toString());
 		switch(estado)
 		{
 		case SIN_BOLA:	
