@@ -521,7 +521,7 @@ public class Entrenador extends TeamManager
 	public boolean estaBloqueadoPortero(int numero)
 	{
 		Ayudas a= new Ayudas();
-		return _players[numero].getRobotAPI().opponentBlocking() || a.pelotaEnMiCampo(_players[numero].getRobotAPI());
+		return _players[numero].getRobotAPI().opponentBlocking() && a.pelotaEnMiCampo(_players[numero].getRobotAPI());
 				
 	}
 }
