@@ -133,6 +133,7 @@ public class Entrenador extends TeamManager
 		}
 		
 		//siempre debera haber un MCD
+		if (cambioPortero)
 		{
 			int aux=0;
 			boolean parar=false;
