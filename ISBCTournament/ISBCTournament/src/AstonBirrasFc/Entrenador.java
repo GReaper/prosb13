@@ -133,7 +133,7 @@ public class Entrenador extends TeamManager
 		}
 		
 		//siempre debera haber un MCD
-		if (estaBloqueado(quienDefensa))
+		if (estaBloqueado(quienDefensa) && false)
 		{
 			int aux=0;
 			boolean parar=false;
@@ -229,6 +229,7 @@ public class Entrenador extends TeamManager
 					jugadaAtaque=true;
 					_players[jugador4].setBehaviour(_behaviours[6]);//regate
 					_players[jugador3].setBehaviour(_behaviours[8]);//bloqueo
+					return;
 				}
 				else
 				{	//miramos la jugada contraria
@@ -241,6 +242,7 @@ public class Entrenador extends TeamManager
 						jugadaAtaque=true;
 						_players[jugador3].setBehaviour(_behaviours[6]);//regate
 						_players[jugador4].setBehaviour(_behaviours[8]);//bloqueo
+						return;
 					}
 					else
 					{	//miramos si es el jugador 3 el que esta cerca 
@@ -252,6 +254,7 @@ public class Entrenador extends TeamManager
 							_players[jugador2].setBehaviour(_behaviours[6]);//regate
 							_players[jugador3].setBehaviour(_behaviours[2]);//regate
 							_players[jugador4].setBehaviour(_behaviours[8]);//bloqueo
+							return;
 						}
 						else
 						{
@@ -261,6 +264,7 @@ public class Entrenador extends TeamManager
 								_players[jugador2].setBehaviour(_behaviours[2]);//MCO
 								_players[jugador3].setBehaviour(_behaviours[9]);//delantero
 								_players[jugador4].setBehaviour(_behaviours[3]);//dsesmarque
+								return;
 							}
 							jugadaAtaque=false;
 						}
@@ -308,6 +312,7 @@ public class Entrenador extends TeamManager
 						jugadaAtaque=true;
 						_players[jugador4].setBehaviour(_behaviours[6]);//regate
 						_players[jugador3].setBehaviour(_behaviours[8]);//bloqueo
+						return;
 					}
 					else
 					{	//miramos la jugada contraria
@@ -320,6 +325,7 @@ public class Entrenador extends TeamManager
 							jugadaAtaque=true;
 							_players[jugador3].setBehaviour(_behaviours[6]);//regate
 							_players[jugador4].setBehaviour(_behaviours[8]);//bloqueo
+							return;
 						}
 						else
 						{
@@ -329,6 +335,7 @@ public class Entrenador extends TeamManager
 								_players[jugador2].setBehaviour(_behaviours[4]);//MCO
 								_players[jugador3].setBehaviour(_behaviours[9]);//delantero
 								_players[jugador4].setBehaviour(_behaviours[3]);//dsesmarque
+								return;
 							}
 							jugadaAtaque=false;
 							
@@ -372,6 +379,7 @@ public class Entrenador extends TeamManager
 						jugadaAtaque=true;
 						_players[jugador4].setBehaviour(_behaviours[6]);//regate
 						_players[jugador3].setBehaviour(_behaviours[8]);//bloqueo
+						return;
 					}
 					else
 					{	//miramos la jugada contraria
@@ -384,6 +392,7 @@ public class Entrenador extends TeamManager
 							jugadaAtaque=true;
 							_players[jugador3].setBehaviour(_behaviours[6]);//regate
 							_players[jugador4].setBehaviour(_behaviours[8]);//bloqueo
+							return;
 						}
 						else
 						{
@@ -393,6 +402,7 @@ public class Entrenador extends TeamManager
 								_players[jugador2].setBehaviour(_behaviours[11]);//MCO
 								_players[jugador3].setBehaviour(_behaviours[2]);//delantero
 								_players[jugador4].setBehaviour(_behaviours[9]);//dsesmarque
+								return;
 							}
 							jugadaAtaque=false;
 							
