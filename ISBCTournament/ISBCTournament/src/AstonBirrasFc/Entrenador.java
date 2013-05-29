@@ -133,7 +133,7 @@ public class Entrenador extends TeamManager
 		}
 		
 		//siempre debera haber un MCD
-		if (estaBloqueado(quienDefensa) && false)
+		/*if (estaBloqueado(quienDefensa) && false)
 		{
 			int aux=0;
 			boolean parar=false;
@@ -158,7 +158,7 @@ public class Entrenador extends TeamManager
 		else
 		{
 			defensaPrevio=-1;
-		}
+		}*/
 		
 		
 		//cambio a jugada desesperada
