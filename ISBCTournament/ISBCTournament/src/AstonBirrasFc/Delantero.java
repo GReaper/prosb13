@@ -30,7 +30,7 @@ public class Delantero extends Behaviour
 			//Sino prueba a pasarla
 			if(ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(myRobotAPI.getOpponentsGoal()), myRobotAPI, 0.25)
 					&& myRobotAPI.canKick() /*&& myRobotAPI.alignedToBallandGoal()*/
-					&& ayuda.cercanoRadio(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestOpponent()), myRobotAPI.getPlayerRadius()*2))
+					&& !ayuda.cercanoRadio(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestOpponent()), myRobotAPI.getPlayerRadius()*2))
 			{
 				//myRobotAPI.setBehindBall(ball);
 				//myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
