@@ -26,7 +26,7 @@ public class Entrenador extends TeamManager
 	
 	boolean jugadaAtaque=false;
 	boolean jugadaDesesperada=false;
-	boolean cambioJugadaDesesperada=false;
+
 	
 	public int onConfigure() 
 	{
@@ -56,7 +56,6 @@ public class Entrenador extends TeamManager
 			_players[jugador2].setBehaviour(_behaviours[11]);//pepe
 			_players[jugador3].setBehaviour(_behaviours[2]);//mco
 			_players[jugador4].setBehaviour(_behaviours[9]);//delantero
-			
 			return;
 			
 		}
@@ -100,7 +99,7 @@ public class Entrenador extends TeamManager
 		
 		//si el portero esta bloqueado, miramos quien sera el portero
 				boolean cambioPortero=false;
-				boolean cambioDefensa=true;
+				boolean cambioDefensa=false;
 				int maximoPortero=5;
 				int maximoDefensa=5;
 				
@@ -120,7 +119,7 @@ public class Entrenador extends TeamManager
 				aux=0;
 			}
 			porteroPrevio=quienPortero;
-			
+			_players[quienPortero].setBehaviour(_behaviours[0]);//fijo gotoball por si acaso(deberia reasignarse)
 			quienPortero=listaOrdenada.get(aux).getId();
 			_players[quienPortero].setBehaviour(_behaviours[7]);
 			cambioPortero=true;
@@ -149,7 +148,7 @@ public class Entrenador extends TeamManager
 				aux=1;
 			}
 			defensaPrevio=quienDefensa;
-			
+			_players[quienDefensa].setBehaviour(_behaviours[0]);//fijo gotoball por si acaso(deberia reasignarse)
 			quienDefensa=listaOrdenada.get(aux).getId();
 			_players[quienDefensa].setBehaviour(_behaviours[5]);
 			cambioDefensa=true;
@@ -164,9 +163,10 @@ public class Entrenador extends TeamManager
 		//cambio a jugada desesperada
 		if(_players[quienPortero].getRobotAPI().getTimeStamp()>=60*1000
 				&& 
-			myRobotAPI.getMyScore()- myRobotAPI.getOpponentScore()<=-2	
+			myRobotAPI.getMyScore()<=myRobotAPI.getOpponentScore()+2	
 				)
 		{
+				
 			jugadaDesesperada=true;
 		}
 		
@@ -227,8 +227,9 @@ public class Entrenador extends TeamManager
 						_players[jugador4].getRobotAPI().getPlayerRadius()*3))
 				{
 					jugadaAtaque=true;
-					_players[jugador4].setBehaviour(_behaviours[6]);//regate
-					_players[jugador3].setBehaviour(_behaviours[8]);//bloqueo
+					_players[jugador4].setBehaviour(_behaviours[2]);//MCA
+					_players[jugador3].setBehaviour(_behaviours[6]);//regate
+					_players[jugador2].setBehaviour(_behaviours[8]);//bloqueo
 					return;
 				}
 				else
@@ -240,6 +241,7 @@ public class Entrenador extends TeamManager
 							_players[jugador3].getRobotAPI().getPlayerRadius()*3))
 					{
 						jugadaAtaque=true;
+						_players[jugador2].setBehaviour(_behaviours[2]);//MCA
 						_players[jugador3].setBehaviour(_behaviours[6]);//regate
 						_players[jugador4].setBehaviour(_behaviours[8]);//bloqueo
 						return;
@@ -251,8 +253,8 @@ public class Entrenador extends TeamManager
 								_players[jugador2].getRobotAPI().getPlayerRadius()*3))
 						{
 							jugadaAtaque=true;
+							_players[jugador3].setBehaviour(_behaviours[2]);//MCA
 							_players[jugador2].setBehaviour(_behaviours[6]);//regate
-							_players[jugador3].setBehaviour(_behaviours[2]);//regate
 							_players[jugador4].setBehaviour(_behaviours[8]);//bloqueo
 							return;
 						}
@@ -264,6 +266,7 @@ public class Entrenador extends TeamManager
 								_players[jugador2].setBehaviour(_behaviours[2]);//MCO
 								_players[jugador3].setBehaviour(_behaviours[9]);//delantero
 								_players[jugador4].setBehaviour(_behaviours[3]);//dsesmarque
+								jugadaAtaque=false;
 								return;
 							}
 							jugadaAtaque=false;
@@ -276,7 +279,7 @@ public class Entrenador extends TeamManager
 			}
 			else
 			{
-				if (myRobotAPI.getMyScore() < myRobotAPI.getOpponentScore())
+				if (myRobotAPI.getMyScore() > myRobotAPI.getOpponentScore())
 				{//perdemos
 					
 					if(cambioPortero||cambioDefensa && !(defensaPrevio==quienPortero && porteroPrevio==quienDefensa))
@@ -310,8 +313,9 @@ public class Entrenador extends TeamManager
 							_players[jugador4].getRobotAPI().getPlayerRadius()*3))
 					{
 						jugadaAtaque=true;
-						_players[jugador4].setBehaviour(_behaviours[6]);//regate
-						_players[jugador3].setBehaviour(_behaviours[8]);//bloqueo
+						_players[jugador4].setBehaviour(_behaviours[2]);//MCA
+						_players[jugador3].setBehaviour(_behaviours[6]);//regate
+						_players[jugador2].setBehaviour(_behaviours[8]);//bloqueo
 						return;
 					}
 					else
@@ -323,21 +327,38 @@ public class Entrenador extends TeamManager
 								_players[jugador3].getRobotAPI().getPlayerRadius()*3))
 						{
 							jugadaAtaque=true;
+							_players[jugador2].setBehaviour(_behaviours[2]);//MCA
 							_players[jugador3].setBehaviour(_behaviours[6]);//regate
 							_players[jugador4].setBehaviour(_behaviours[8]);//bloqueo
 							return;
 						}
 						else
 						{
-							if(jugadaAtaque)
+							//miramos si es el jugador 3 el que esta cerca 
+							if(!jugadaAtaque && helper.cercanoRadio(_players[jugador2].getRobotAPI().getPosition(), 
+									_players[jugador2].getRobotAPI().toFieldCoordinates(_players[jugador2].getRobotAPI().getBall()), 
+									_players[jugador2].getRobotAPI().getPlayerRadius()*3))
 							{
-								//ninguno esta cercano reiniciamos
-								_players[jugador2].setBehaviour(_behaviours[4]);//MCO
-								_players[jugador3].setBehaviour(_behaviours[9]);//delantero
-								_players[jugador4].setBehaviour(_behaviours[3]);//dsesmarque
+								jugadaAtaque=true;
+								_players[jugador3].setBehaviour(_behaviours[2]);//MCA
+								_players[jugador2].setBehaviour(_behaviours[6]);//regate
+								_players[jugador4].setBehaviour(_behaviours[8]);//bloqueo
 								return;
 							}
-							jugadaAtaque=false;
+							else
+							{
+								if(jugadaAtaque)
+								{
+									//ninguno esta cercano reiniciamos
+									_players[jugador2].setBehaviour(_behaviours[4]);//MCO
+									_players[jugador3].setBehaviour(_behaviours[9]);//delantero
+									_players[jugador4].setBehaviour(_behaviours[3]);//dsesmarque
+									jugadaAtaque=false;
+									return;
+								}
+								jugadaAtaque=false;
+							}
+						
 							
 						}
 						
@@ -377,8 +398,9 @@ public class Entrenador extends TeamManager
 							_players[jugador4].getRobotAPI().getPlayerRadius()*3))
 					{
 						jugadaAtaque=true;
-						_players[jugador4].setBehaviour(_behaviours[6]);//regate
-						_players[jugador3].setBehaviour(_behaviours[8]);//bloqueo
+						_players[jugador4].setBehaviour(_behaviours[4]);//MCO
+						_players[jugador3].setBehaviour(_behaviours[9]);//delantero
+						_players[jugador2].setBehaviour(_behaviours[3]);//dsesmarque
 						return;
 					}
 					else
@@ -390,21 +412,37 @@ public class Entrenador extends TeamManager
 								_players[jugador3].getRobotAPI().getPlayerRadius()*3))
 						{
 							jugadaAtaque=true;
-							_players[jugador3].setBehaviour(_behaviours[6]);//regate
-							_players[jugador4].setBehaviour(_behaviours[8]);//bloqueo
+							_players[jugador2].setBehaviour(_behaviours[4]);//MCO
+							_players[jugador3].setBehaviour(_behaviours[9]);//delantero
+							_players[jugador4].setBehaviour(_behaviours[3]);//dsesmarque
 							return;
 						}
 						else
 						{
-							if(jugadaAtaque)
+							//miramos si es el jugador 3 el que esta cerca 
+							if(!jugadaAtaque && helper.cercanoRadio(_players[jugador2].getRobotAPI().getPosition(), 
+									_players[jugador2].getRobotAPI().toFieldCoordinates(_players[jugador2].getRobotAPI().getBall()), 
+									_players[jugador2].getRobotAPI().getPlayerRadius()*3))
 							{
-								//ninguno esta cercano reiniciamos
-								_players[jugador2].setBehaviour(_behaviours[11]);//MCO
-								_players[jugador3].setBehaviour(_behaviours[2]);//delantero
-								_players[jugador4].setBehaviour(_behaviours[9]);//dsesmarque
+								jugadaAtaque=true;
+								_players[jugador2].setBehaviour(_behaviours[4]);//MCO
+								_players[jugador3].setBehaviour(_behaviours[9]);//delantero
+								_players[jugador4].setBehaviour(_behaviours[3]);//dsesmarque
 								return;
 							}
-							jugadaAtaque=false;
+							else
+							{
+								if(jugadaAtaque)
+								{
+									//ninguno esta cercano reiniciamos
+									_players[jugador3].setBehaviour(_behaviours[11]);//pepe
+									_players[jugador2].setBehaviour(_behaviours[2]);//mca
+									_players[jugador4].setBehaviour(_behaviours[9]);//delantero
+									jugadaAtaque=false;
+									return;
+								}
+								jugadaAtaque=false;
+							}
 							
 						}
 						
@@ -435,19 +473,14 @@ public class Entrenador extends TeamManager
 					}
 				}
 				
-				cambioJugadaDesesperada=true;
+				
 			}
-			else
-			{
-				cambioJugadaDesesperada=false;
-			}
-			
-			
-			if (myRobotAPI.getMyScore() < myRobotAPI.getOpponentScore()&& cambioJugadaDesesperada)
+						
+			if (myRobotAPI.getMyScore() > myRobotAPI.getOpponentScore())
 			{//perdiendo
-				_players[jugador4].setBehaviour(_behaviours[6]);//otro portero
-				_players[jugador2].setBehaviour(_behaviours[9]);//MCO
-				_players[jugador3].setBehaviour(_behaviours[8]);//delantero				
+				_players[jugador4].setBehaviour(_behaviours[6]);//regate
+				_players[jugador2].setBehaviour(_behaviours[9]);//delantero
+				_players[jugador3].setBehaviour(_behaviours[8]);//block				
 				return;
 			}
 			else
@@ -478,7 +511,7 @@ public class Entrenador extends TeamManager
 			// Jugador 3, Delantero inicial
 			case 3: return  _behaviours[9];
 			// Jugador 4, Desmarcador inicial
-			case 4: return  _behaviours[4];
+			case 4: return  _behaviours[3];
 			// En caso de llegar aquí, Go to ball inicial
 			default: return  _behaviours[0];
 		}

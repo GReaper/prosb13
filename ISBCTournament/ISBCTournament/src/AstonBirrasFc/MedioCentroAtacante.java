@@ -44,7 +44,7 @@ public class MedioCentroAtacante extends Behaviour
 	@Override
 	public int takeStep() 
 	{
-		myRobotAPI.setDisplayString(estado.toString());
+		myRobotAPI.setDisplayString("MCO_"+estado.toString());
 		double nuevaX;
 		double angulo;
 		int miZona;
