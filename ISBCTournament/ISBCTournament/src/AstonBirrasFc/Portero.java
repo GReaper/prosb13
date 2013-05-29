@@ -98,7 +98,7 @@ public class Portero extends Behaviour
 		}
 		else
 		//Si esta fuera del area de gol vuelve
-		if( (myRobotAPI.getPosition().x * SIDE < 1.07 || Math.abs(myRobotAPI.getPosition().y) > 0.19))
+		if( (myRobotAPI.getPosition().x * SIDE < 1.07 || Math.abs(myRobotAPI.getPosition().y) > 0.2222))
 		{
 			Vec2 move;
 			if (ourgoal.y < 0)
