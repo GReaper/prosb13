@@ -59,12 +59,12 @@ public class Portero extends Behaviour
 			//Para que este entre el balon y la porteria
 			if( ball.y > 0)
 			{
-				Vec2 move=new Vec2((double)SIDE, 6);
+				Vec2 move=new Vec2((double)SIDE, 8);
 				myRobotAPI.setSteerHeading(ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(move), myRobotAPI,0.0001));
 			}
 			else
 			{
-				Vec2 move=new Vec2((double)SIDE, -6);
+				Vec2 move=new Vec2((double)SIDE, -8);
 				myRobotAPI.setSteerHeading(ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(move), myRobotAPI,0.0001));
 			}
 
