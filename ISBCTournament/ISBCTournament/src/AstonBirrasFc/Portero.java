@@ -23,7 +23,10 @@ public class Portero extends Behaviour
 		Vec2[] opponents=myRobotAPI.getOpponents();
 		SIDE=myRobotAPI.getFieldSide();
 		double distancia=ayuda.distanciaEntre(myRobotAPI.getPosition(),myRobotAPI.toFieldCoordinates(ourgoal));
-		if(distancia > 0.18)
+		//if(distancia > 0.18)
+		// Tomar seccion % del campo total
+		double section = Math.abs(myRobotAPI.getLeftFieldBound()-myRobotAPI.getRightFieldBound())*0.05;
+		if (Math.abs(myRobotAPI.getPosition().x) < Math.abs(myRobotAPI.getLeftFieldBound())-section)
 		{ //Si no esta cerca de la porteria(factor del 15%) evita a contrarios y a compañeros
 			
 			
@@ -59,6 +62,12 @@ public class Portero extends Behaviour
 					myRobotAPI.setDisplayString("Portero (ECO)");
 				}
 			}	
+			if( (myRobotAPI.getPosition().x * SIDE < 1.37 || Math.abs(myRobotAPI.getPosition().y) > 0.25))
+			{
+				myRobotAPI.setSteerHeading(ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(ourgoal), myRobotAPI,0.01));
+				myRobotAPI.setSpeed(1.0);
+				myRobotAPI.setDisplayString("Portero (areaaaaaa)");
+			}
 			myRobotAPI.setDisplayString("Portero (Out)");
 		}
 		else
@@ -89,11 +98,20 @@ public class Portero extends Behaviour
 		}
 		else
 		//Si esta fuera del area de gol vuelve
-		if( (Math.abs(ourgoal.x) > myRobotAPI.getPlayerRadius() * 1.5) ||
-				 (Math.abs(ourgoal.y) > myRobotAPI.getPlayerRadius() * 2.9) )
+			
+		if( (myRobotAPI.getPosition().x * SIDE < 1.07 || Math.abs(myRobotAPI.getPosition().y) > 0.45))
 		{
-			myRobotAPI.setSteerHeading(ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(ourgoal), myRobotAPI,0.01));
-			myRobotAPI.setSpeed(1.0);
+			Vec2 move;
+			if (ourgoal.y < 0)
+			{
+				move=new Vec2((double)SIDE, -8);				
+			}
+			else
+			{
+				move=new Vec2((double)SIDE, 8);				
+			}
+			myRobotAPI.setSteerHeading(ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(move), myRobotAPI,0.01));
+			//myRobotAPI.setSpeed(1.0);
 			myRobotAPI.setDisplayString("Portero (area)");
 		}
 		else		
