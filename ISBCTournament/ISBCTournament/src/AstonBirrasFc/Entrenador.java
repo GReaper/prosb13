@@ -246,7 +246,7 @@ public class Entrenador extends TeamManager
 		int maximoDefensa=4;
 		
 		//creamos la lista ordenada
-		List<Vec2Ordered> listaOrdenada= new ArrayList<Vec2Ordered>();
+		//List<Vec2Ordered> listaOrdenada= new ArrayList<Vec2Ordered>();
 		
 		
 		/*
@@ -672,7 +672,7 @@ public class Entrenador extends TeamManager
 		
 	}
 	
-	public boolean estaBloqueado2(int numero,List<Vec2Ordered>lista)
+	/*public boolean estaBloqueado2(int numero,List<Vec2Ordered>lista)
 	{
 		
 		int id= lista.get(numero).getId()%5;
@@ -685,7 +685,7 @@ public class Entrenador extends TeamManager
 		
 		//return _players[numero].getRobotAPI().opponentBlocking();
 		//||	_players[numero].getRobotAPI().teammateBlocking();
-	}
+	}*/
 	
 	public boolean estaBloqueado(int numero)
 	{
