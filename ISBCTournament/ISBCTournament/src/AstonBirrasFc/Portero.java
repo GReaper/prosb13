@@ -16,14 +16,31 @@ public class Portero extends Behaviour
 	public int takeStep() 
 	{				
 		//Cojo posicion de la bola
+		myRobotAPI.setDisplayString("Mierda");
 		Vec2 ball=myRobotAPI.getBall();
 		//Cojo donde esta mi porteria
 		Vec2 ourgoal=myRobotAPI.getOurGoal();
 		Vec2[] teammates=myRobotAPI.getTeammates();
 		Vec2[] opponents=myRobotAPI.getOpponents();
 		SIDE=myRobotAPI.getFieldSide();
-		if(!ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(ourgoal), myRobotAPI, 0.15))
+		
+		if(!ayuda.cercano(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(ourgoal), myRobotAPI, 0.10))
 		{ //Si no esta cerca de la porteria(factor del 15%) evita a contrarios y a compañeros
+			
+			
+			//Si esta bloqueado se zafa de el(amigo)
+			if (myRobotAPI.isBlocking(myRobotAPI.getClosestMate()))
+			{
+				ayuda.evitarBloqueo(myRobotAPI.getClosestMate(), myRobotAPI);
+				myRobotAPI.setDisplayString("Por. (EBC)");
+			}
+			
+			//Si esta bloqueado se zafa de el(Oponente)
+			if (myRobotAPI.isBlocking(myRobotAPI.getClosestOpponent()))
+			{
+				ayuda.evitarBloqueo(myRobotAPI.getClosestOpponent(), myRobotAPI);
+				myRobotAPI.setDisplayString("Por. (EBO)");
+			}
 			
 			//Evita colision compañeros
 			for(int i =0;i<teammates.length;i++)
@@ -43,7 +60,6 @@ public class Portero extends Behaviour
 					myRobotAPI.setDisplayString("Portero (ECO)");
 				}
 			}
-			return myRobotAPI.ROBOT_OK;
 		}
 		else
 		//Si la pelota esta detras del portero intenta ir a por ella y golpearla hacia fuera
@@ -76,7 +92,7 @@ public class Portero extends Behaviour
 		if( (Math.abs(ourgoal.x) > myRobotAPI.getPlayerRadius() * 1.5) ||
 				 (Math.abs(ourgoal.y) > myRobotAPI.getPlayerRadius() * 2.9) )
 		{
-			myRobotAPI.setSteerHeading(ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(ourgoal), myRobotAPI,0.0001));
+			myRobotAPI.setSteerHeading(ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(ourgoal), myRobotAPI,0.01));
 			myRobotAPI.setSpeed(1.0);
 			myRobotAPI.setDisplayString("Portero (area)");
 		}
@@ -87,17 +103,25 @@ public class Portero extends Behaviour
 			{
 				Vec2 move=new Vec2((double)SIDE, 8);
 				myRobotAPI.setSteerHeading(ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(move), myRobotAPI,0.0001));
+				myRobotAPI.setDisplayString("y>0");
 			}
 			else
 			{
 				Vec2 move=new Vec2((double)SIDE, -8);
 				myRobotAPI.setSteerHeading(ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(move), myRobotAPI,0.0001));
+				myRobotAPI.setDisplayString("y<0");
 			}
 
 			if( Math.abs( ball.y) < myRobotAPI.getPlayerRadius() * 0.15)
+			{
 				myRobotAPI.setSpeed(0);
+				myRobotAPI.setDisplayString("speed0");
+			}				
 			else
+			{
 				myRobotAPI.setSpeed(1.0);
+				myRobotAPI.setDisplayString("speed1");
+			}			
 			myRobotAPI.setDisplayString("Portero (wait)");
 				
 		}
