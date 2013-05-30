@@ -65,7 +65,7 @@ public class Portero extends Behaviour
 			{
 				myRobotAPI.setSteerHeading(ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(ourgoal), myRobotAPI,0.01));
 				myRobotAPI.setSpeed(1.0);
-				myRobotAPI.setDisplayString("Portero (areaaaaaa)");
+				myRobotAPI.setDisplayString("Portero (area)");
 			}
 			myRobotAPI.setDisplayString("Portero (Out)");
 		}
@@ -98,7 +98,7 @@ public class Portero extends Behaviour
 		}
 		else
 		//Si esta fuera del area de gol vuelve
-		if( (myRobotAPI.getPosition().x * SIDE < 1.07 || Math.abs(myRobotAPI.getPosition().y) > 0.19))
+		if( (myRobotAPI.getPosition().x * SIDE < 1.07 || Math.abs(myRobotAPI.getPosition().y) > 0.2222))
 		{
 			Vec2 move;
 			if (ourgoal.y < 0)
@@ -120,24 +120,20 @@ public class Portero extends Behaviour
 			{
 				Vec2 move=new Vec2((double)SIDE, 8);
 				myRobotAPI.setSteerHeading(ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(move), myRobotAPI,0.0001));
-				myRobotAPI.setDisplayString("y>0");
 			}
 			else
 			{
 				Vec2 move=new Vec2((double)SIDE, -8);
 				myRobotAPI.setSteerHeading(ayuda.irAPosicionParando(myRobotAPI.toFieldCoordinates(move), myRobotAPI,0.0001));
-				myRobotAPI.setDisplayString("y<0");
 			}
 
 			if( Math.abs( ball.y) < myRobotAPI.getPlayerRadius() * 0.15)
 			{
 				myRobotAPI.setSpeed(0);
-				myRobotAPI.setDisplayString("speed0");
 			}				
 			else
 			{
 				myRobotAPI.setSpeed(1.0);
-				myRobotAPI.setDisplayString("speed1");
 			}			
 			myRobotAPI.setDisplayString("Portero (wait)");
 				

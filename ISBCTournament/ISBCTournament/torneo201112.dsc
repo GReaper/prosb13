@@ -2,7 +2,7 @@ PulpoPaulTeam t111211.PulpoPaulTeam
 APITeam t111212.APIAttackUCMPlayer
 Hispania t111202.HispaniaTeam
 ToposTeam t111214.ToposTeam
-GolDeSeñor t111206.GolDeSenyorUCMPlayer
+ADRVX AstonBirrasFc.ADRVX
 JAR_Team t111205.t111205UCMPlayer
 JLJATeam t111207.JLJATeam
 TeamRoger t111201.TeamRoger
