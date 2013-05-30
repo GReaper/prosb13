@@ -11,9 +11,10 @@ public void configure() { }
 
 public int takeStep() 
 {
- myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
- if (myRobotAPI.canKick())
-	 myRobotAPI.kick();
+	myRobotAPI.setDisplayString("Go to ball"); 
+	myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+	if (myRobotAPI.canKick())
+		myRobotAPI.kick();
  
  
  return myRobotAPI.ROBOT_OK;
@@ -21,7 +22,7 @@ public int takeStep()
 
 public void onInit(RobotAPI r) 
 {
-	r.setDisplayString("goToBallBehaviour"+ r.getID()); 
+	
 }
 
 public void onRelease(RobotAPI r) { }

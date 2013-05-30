@@ -75,7 +75,8 @@ public class Entrenador extends TeamManager
 			
 		}
 		
-		//siempre debera haber un portero
+		
+		
 		
 		//creamos la lista ordenada
 		List<Vec2Ordered> listaOrdenada= new ArrayList<Vec2Ordered>();
@@ -95,13 +96,36 @@ public class Entrenador extends TeamManager
 		
 		
 		Collections.sort(listaOrdenada);
-		/**/
+		
+		
+		//caso de error
+			if(quienPortero== quienDefensa || quienPortero==jugador2 ||	quienPortero== jugador3 || quienPortero==jugador4
+					||quienDefensa==jugador2 ||	quienDefensa== jugador3 || quienDefensa==jugador4 
+					|| jugador2==jugador3 || jugador2==jugador4
+					|| jugador3==jugador4
+					)
+				{
+					quienPortero=listaOrdenada.get(0).getId();
+					quienDefensa=listaOrdenada.get(1).getId();
+					jugador2=listaOrdenada.get(2).getId();
+					jugador3=listaOrdenada.get(3).getId();
+					jugador4=listaOrdenada.get(4).getId();
+					_players[quienPortero].setBehaviour(_behaviours[7]);
+					_players[quienDefensa].setBehaviour(_behaviours[5]);
+					_players[jugador2].setBehaviour(_behaviours[4]);//go to ball
+					_players[jugador3].setBehaviour(_behaviours[9]);//delantero
+					_players[jugador4].setBehaviour(_behaviours[3]);//rebote
+					return;
+					
+				}
+		
+		
 		
 		//si el portero esta bloqueado, miramos quien sera el portero
-				boolean cambioPortero=false;
-				boolean cambioDefensa=false;
-				int maximoPortero=5;
-				int maximoDefensa=5;
+		boolean cambioPortero=false;
+		boolean cambioDefensa=false;
+		int maximoPortero=5;
+		int maximoDefensa=5;
 				
 		if (estaBloqueadoPortero(quienPortero))
 		{
@@ -119,7 +143,7 @@ public class Entrenador extends TeamManager
 				aux=0;
 			}
 			porteroPrevio=quienPortero;
-			_players[quienPortero].setBehaviour(_behaviours[0]);//fijo gotoball por si acaso(deberia reasignarse)
+			_players[porteroPrevio].setBehaviour(_behaviours[0]);//fijo gotoball por si acaso(deberia reasignarse)
 			quienPortero=listaOrdenada.get(aux).getId();
 			_players[quienPortero].setBehaviour(_behaviours[7]);
 			cambioPortero=true;
@@ -148,7 +172,7 @@ public class Entrenador extends TeamManager
 				aux=1;
 			}
 			defensaPrevio=quienDefensa;
-			_players[quienDefensa].setBehaviour(_behaviours[0]);//fijo gotoball por si acaso(deberia reasignarse)
+			_players[defensaPrevio].setBehaviour(_behaviours[0]);//fijo gotoball por si acaso(deberia reasignarse)
 			quienDefensa=listaOrdenada.get(aux).getId();
 			_players[quienDefensa].setBehaviour(_behaviours[5]);
 			cambioDefensa=true;
