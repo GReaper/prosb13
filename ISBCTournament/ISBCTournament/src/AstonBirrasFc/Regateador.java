@@ -19,6 +19,9 @@ public class Regateador extends Behaviour
 
 	public int takeStep() 
 	{	
+		// Get height size
+		//double hg = myRobotAPI.getUpperFieldBound() - myRobotAPI.getLowerFieldBound();
+		
 		// Take closest opponent
 		Vec2 closestOp = myRobotAPI.getClosestOpponent();		
 		
@@ -120,9 +123,6 @@ public class Regateador extends Behaviour
 	
 	private States evaluateEnv()
 	{
-		// Get height size
-		double hg = myRobotAPI.getUpperFieldBound() - myRobotAPI.getLowerFieldBound();
-		
 		// Take closest opponent
 		Vec2 closestOp = myRobotAPI.getClosestOpponent();
 		
