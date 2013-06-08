@@ -9,122 +9,109 @@ import teams.ucmTeam.RobotAPI;
 public class Desmarcador extends Behaviour
 {
 	private Ayudas helper;
+	private enum States {AvoidFrBlock, AvoidOppBlock, AvoidOpp, Moving, Replacing, Staying, GoToBall};
+	private States state;
 	
 	public void configure() 
 	{ 
 		helper = new Ayudas();
+		state = States.Moving;
 	}
 
 	public int takeStep() 
 	{		
+		// Evaluate environment
+		state = evaluateEnv();
+		
 		// Take closest opponent
 		Vec2 closestOp = myRobotAPI.getClosestOpponent();
 		
-		// Check whether the player is blocked by the closest teammate
-		if (myRobotAPI.isBlocking(myRobotAPI.getClosestMate()))
+		// Make movements
+		switch (state)
 		{
-			helper.evitarBloqueo(myRobotAPI.getClosestMate(), myRobotAPI);
+			case AvoidFrBlock:
+				// Avoid blocking
+				helper.evitarBloqueo(myRobotAPI.getClosestMate(), myRobotAPI);
+				// Set displayed text
+				myRobotAPI.setDisplayString("Desm. (AF)");				
+				break;
 
-			// Set displayed text
-			myRobotAPI.setDisplayString("Desm. (AF)");
-			
-			// Return
-			return myRobotAPI.ROBOT_OK;
-		}
-		
-		// If the player isn't in the opponents field, move him
-		Double quarterSize = (myRobotAPI.getRightFieldBound() - myRobotAPI.getLeftFieldBound()) / 4;
-		if (myRobotAPI.getPosition().x * myRobotAPI.getFieldSide() >= -quarterSize)
-		{			
-			// Check whether that opponent is blocking
-			if (myRobotAPI.isBlocking(closestOp))
-			{
+			case AvoidOppBlock:
+				// Avoid block
 				helper.evitarBloqueo(closestOp, myRobotAPI);
-
 				// Set displayed text
-				myRobotAPI.setDisplayString("Desm. (AO)");
-				
-				// Return
-				return myRobotAPI.ROBOT_OK;
-			}
-			
-			// Check whether that opponent is too close
-			if (helper.cercanoRadio(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(closestOp), myRobotAPI.getPlayerRadius()*2))
-			{
+				myRobotAPI.setDisplayString("Desm. (AO)");				
+				break;
+
+			case AvoidOpp:
+				// Avoid collision
 				helper.evitaColision(closestOp, myRobotAPI);
-
 				// Set displayed text
-				myRobotAPI.setDisplayString("Desm. (AO)");
-				
-				// Return
-				return myRobotAPI.ROBOT_OK;
-			}
-			
-			// 1.- Set steering. We make a random decision to go to the left
-			// or right corner
-			Vec2 dest = myRobotAPI.getOpponentsGoal();
-			// 2.- Decide the corner to go to. Take a random int that can be 0 or 1.
-			// With 1 we will go to the left corner (and viceversa)
-			Random r = new Random();
-			if (r.nextInt(2) == 1)
-			{
-				// Go to left corner
-				dest = new Vec2(myRobotAPI.getOpponentsGoal().x, myRobotAPI.getLowerFieldBound());
-			}
-			else
-			{
-				// Go to right corner
-				dest = new Vec2(myRobotAPI.getOpponentsGoal().x, myRobotAPI.getUpperFieldBound());				
-			}
-			double angle = helper.anguloDestino(dest, myRobotAPI);
-			
-			myRobotAPI.setSteerHeading(angle);	
-			
-			// 2.- Increase speed
-			myRobotAPI.setSpeed(1000);
+				myRobotAPI.setDisplayString("Desm. (AO)");				
+				break;
 
-			// Set displayed text
-			myRobotAPI.setDisplayString("Desm. (M)");
-			
-			// Return
-			return myRobotAPI.ROBOT_OK;
-		}
-		
-		// Check whether that opponent is too close
-		if (helper.cercanoRadio(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(closestOp), myRobotAPI.getPlayerRadius()*2))
-		{
-			// Nearly opponent, move to another position
-			helper.evitaColision(closestOp, myRobotAPI);
-			
-			// Set displayed text
-			myRobotAPI.setDisplayString("Desm. (D)");
-		}
-		else
-		{
-			// No nearly opponents, don't move
-			
-			// 1.- Reduce speed
-			myRobotAPI.setSpeed(0);
-			
-			// Set displayed text
-			myRobotAPI.setDisplayString("Desm. (S)");
-		}
-		
-		// Check if the player is the closest to ball and there aren't mates closer
-		if (myRobotAPI.closestToBall() && !helper.cercanoRadio(myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestMate()), myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI.getPlayerRadius()*2.5))
-		{
-			// Head to opponent's goal
-			myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
-			// Increase speed
-			myRobotAPI.setSpeed(0.7);
-			// Set displayed text
-			myRobotAPI.setDisplayString("Desm. (GTB)");
-		}
-		
-		// Try to kick
-		if (myRobotAPI.alignedToBallandGoal() && myRobotAPI.canKick())
-		{
-			myRobotAPI.kick();
+			case Moving:
+				// 1.- Set steering. We make a random decision to go to the left
+				// or right corner
+				Vec2 dest = myRobotAPI.getOpponentsGoal();
+				// 2.- Decide the corner to go to. Take a random int that can be 0 or 1.
+				// With 1 we will go to the left corner (and viceversa)
+				Random r = new Random();
+				if (r.nextInt(2) == 1)
+				{
+					// Go to left corner
+					dest = new Vec2(myRobotAPI.getOpponentsGoal().x, myRobotAPI.getLowerFieldBound());
+				}
+				else
+				{
+					// Go to right corner
+					dest = new Vec2(myRobotAPI.getOpponentsGoal().x, myRobotAPI.getUpperFieldBound());				
+				}
+				double angle = helper.anguloDestino(dest, myRobotAPI);				
+				myRobotAPI.setSteerHeading(angle);					
+				// 2.- Increase speed
+				myRobotAPI.setSpeed(1000);
+				// Set displayed text
+				myRobotAPI.setDisplayString("Desm. (M)");
+				break;
+
+			case Replacing:
+				// Nearly opponent, move to another position
+				helper.evitaColision(closestOp, myRobotAPI);				
+				break;
+
+			case Staying:				
+				// 1.- Reduce speed
+				myRobotAPI.setSpeed(0);				
+				break;
+
+			case GoToBall:
+				// Head to opponent's goal
+				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+				// Increase speed
+				myRobotAPI.setSpeed(0.7);
+				// Set displayed text
+				myRobotAPI.setDisplayString("Desm. (GTB)");
+				// Try to kick
+				if (myRobotAPI.alignedToBallandGoal() && myRobotAPI.canKick())
+				{
+					myRobotAPI.kick();
+				}
+				break;
+				
+			default:
+				// Head to opponent's goal
+				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+				// Increase speed
+				myRobotAPI.setSpeed(0.7);
+				// Set displayed text
+				myRobotAPI.setDisplayString("Desm. (GTB)");
+				// Try to kick
+				if (myRobotAPI.alignedToBallandGoal() && myRobotAPI.canKick())
+				{
+					myRobotAPI.kick();
+				}
+				break;
 		}
 		
 		return myRobotAPI.ROBOT_OK;
@@ -137,4 +124,57 @@ public class Desmarcador extends Behaviour
 	public void onRelease(RobotAPI r) { }
 
 	public void end() { }
+	
+	private States evaluateEnv()
+	{
+		// Take closest opponent
+		Vec2 closestOp = myRobotAPI.getClosestOpponent();
+		
+		// Check whether the player is blocked by the closest teammate
+		if (myRobotAPI.isBlocking(myRobotAPI.getClosestMate()))
+		{
+			// Return
+			return States.AvoidFrBlock;
+		}
+		
+		// If the player isn't in the opponents field, move him
+		Double quarterSize = (myRobotAPI.getRightFieldBound() - myRobotAPI.getLeftFieldBound()) / 4;
+		if (myRobotAPI.getPosition().x * myRobotAPI.getFieldSide() >= -quarterSize)
+		{			
+			// Check whether that opponent is blocking
+			if (myRobotAPI.isBlocking(closestOp))
+			{
+				// Return
+				return States.AvoidOppBlock;
+			}
+			
+			// Check whether that opponent is too close
+			if (helper.cercanoRadio(myRobotAPI.getPosition(),  myRobotAPI.toFieldCoordinates(closestOp), myRobotAPI.getPlayerRadius()*2))
+			{
+				// Return
+				return States.AvoidOpp;
+			}
+			
+			// Return
+			return States.Moving;
+		}
+		
+		// Check if the player is the closest to ball and there aren't mates closer
+		if (myRobotAPI.closestToBall() && !helper.cercanoRadio(myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestMate()), myRobotAPI.toFieldCoordinates(myRobotAPI.getBall()), myRobotAPI.getPlayerRadius()*2.5))
+		{
+			return States.GoToBall;
+		}
+		
+		// Check whether that opponent is too close
+		if (helper.cercanoRadio(myRobotAPI.getPosition(), myRobotAPI.toFieldCoordinates(closestOp), myRobotAPI.getPlayerRadius()*2))
+		{
+			// Return
+			return States.Replacing;
+		}
+		else
+		{
+			// No nearly opponents, don't move
+			return States.Staying;
+		}	
+	}
 }
