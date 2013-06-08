@@ -173,6 +173,7 @@ public class MedioCentroAtacante extends Behaviour
 						myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 					}
 					
+					estado=Estados.SINPELOTA;
 				break;
 				
 				
